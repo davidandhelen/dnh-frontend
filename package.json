@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "babel-eslint": "^7.0.0",
     "eslint-plugin-import": "^2.18.0",
     "flow-bin": "^0.102.0",
     "husky": "^3.0.0",
@@ -17,8 +18,8 @@
     "stylelint-scss": "^3.9.1"
   },
   "devDependencies": {
-    "eslint": "^6.0.1",
-    "eslint-plugin-react": "^7.14.2"
+    "eslint": "^3.16.1",
+    "eslint-plugin-react": "^6.4.1"
   },
   "scripts": {
     "start": "react-scripts start",

@@ -117,7 +117,6 @@ module.exports = {
       }
     ],
 
-    "react/forbid-foreign-prop-types": 2,
     "react/jsx-boolean-value": [2, "always"],
     "react/jsx-key": 2,
     "react/jsx-no-bind": [2, { ignoreRefs: true }],
@@ -138,7 +137,6 @@ module.exports = {
     "react/no-unescaped-entities": 2,
     "react/no-unknown-property": 2,
     "react/sort-comp": 2,
-    "react/void-dom-elements-no-children": 2,
     "react/sort-prop-types": [
       2,
       {
