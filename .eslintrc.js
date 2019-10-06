@@ -19,14 +19,11 @@ module.exports = {
     sourceType: "module"
   },
 
-  plugins: [
-    "import",
-    "react",
-  ],
+  plugins: ["import", "react", "prettier"],
 
   settings: {
-    "react": {
-      "version": "16.0"
+    react: {
+      version: "16.0"
     }
   },
 
@@ -86,6 +83,7 @@ module.exports = {
     "prefer-rest-params": 2,
     "prefer-spread": 2,
     quotes: [2, "single"],
+    semi: [2, "always"],
     "spaced-comment": [2, "always", { exceptions: ["/"] }],
     "use-isnan": 2,
     "valid-typeof": 2,
@@ -97,6 +95,7 @@ module.exports = {
     "one-var": [2, "never"],
     "prefer-template": 2,
 
+    // Import rules.
     "import/default": 2,
     "import/export": 2,
     "import/imports-first": 2,
@@ -117,6 +116,7 @@ module.exports = {
       }
     ],
 
+    // React rules.
     "react/jsx-boolean-value": [2, "always"],
     "react/jsx-key": 2,
     "react/jsx-no-bind": [2, { ignoreRefs: true }],
@@ -152,6 +152,9 @@ module.exports = {
         shorthandFirst: false,
         ignoreCase: true
       }
-    ]
+    ],
+
+    // Use eslint to run prettier.
+    "prettier/prettier": "error"
   }
 };
