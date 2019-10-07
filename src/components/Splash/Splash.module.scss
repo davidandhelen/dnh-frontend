@@ -1,0 +1,15 @@
+@import "../style/constants";
+
+.container {
+  background: $color-white;
+}
+
+.date {
+  color: $color-black;
+  font-family: $font-sans-serif;
+}
+
+.honoring {
+  color: $color-black;
+  font-family: $font-serif;
+}

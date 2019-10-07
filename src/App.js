@@ -1,17 +1,13 @@
-import React, { Component } from 'react';
-import { Route, Switch } from 'react-router-dom';
+import React, { Component } from "react";
+import { Route, Switch } from "react-router-dom";
 
-import Home from './components/Home';
-import Ceremony from './components/Ceremony';
-import About from './components/About';
+import Splash from "./Splash/Splash";
 
 class App extends Component {
   render() {
     return (
       <Switch>
-        <Route component={Home} exact={true} path='/' />
-        <Route component={About} path='/about' />
-        <Route component={Ceremony} path='/ceremony' />
+        <Route component={Splash} exact={true} path="/" />
       </Switch>
     );
   }
