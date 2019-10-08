@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Route, Switch } from "react-router-dom";
 
-import Splash from "./Splash/Splash";
+import Splash from "./components/Splash/Splash";
 
 class App extends Component {
   render() {
