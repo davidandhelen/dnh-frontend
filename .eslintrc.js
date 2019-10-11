@@ -4,7 +4,7 @@ module.exports = {
     es6: true
   },
 
-  extends: "eslint:recommended",
+  extends: ["eslint:recommended", "plugin:flowtype/recommended"],
 
   globals: {
     Atomics: "readonly",
@@ -19,7 +19,7 @@ module.exports = {
     sourceType: "module"
   },
 
-  plugins: ["import", "react", "prettier"],
+  plugins: ["flowtype", "import", "react", "prettier"],
 
   settings: {
     react: {

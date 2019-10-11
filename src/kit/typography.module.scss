@@ -1,0 +1,17 @@
+@import "../style/constants";
+
+.h1,
+.h2,
+.h3,
+.h4,
+.h5,
+.h6 {
+  color: $color-black; // Temporary until primary colors
+  font-family: $font-serif;
+}
+
+.subTitle,
+.p {
+  color: $color-black; // Temporary until secondary colors
+  font-family: $font-sans-serif;
+}
