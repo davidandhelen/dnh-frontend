@@ -1,15 +1,17 @@
 import React, { Component } from "react";
 import { Route, Switch } from "react-router-dom";
 
-import Splash from "./components/Splash/Splash";
-import Gallery from "./components/Kit/Gallery";
+import Splash from "./pages/Splash";
+import Login from "./pages/Login";
+import Gallery from "./pages/Gallery";
 
 class App extends Component {
   render() {
     return (
       <Switch>
         <Route component={Splash} exact={true} path="/" />
-        <Route component={Gallery} path="/kit-gallery" />
+        <Route component={Login} path="/login" />
+        <Route component={Gallery} path="/dev/gallery" />
       </Switch>
     );
   }
