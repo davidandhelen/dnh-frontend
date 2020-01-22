@@ -1,15 +1,10 @@
 @import "../../style/constants";
 
 .container {
+  align-items: center;
   background: $color-white;
-}
-
-.date {
-  color: $color-black;
-  font-family: $font-sans-serif;
-}
-
-.honoring {
-  color: $color-black;
-  font-family: $font-serif;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  justify-content: center;
 }
