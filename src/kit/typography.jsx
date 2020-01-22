@@ -6,7 +6,7 @@ import classNames from "classnames";
 import css from "./typography.module.scss";
 
 type TypographyProps = {
-  classes: string,
+  classes?: string,
   children: Node
 };
 
