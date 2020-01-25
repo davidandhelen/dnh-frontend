@@ -3,7 +3,9 @@ import { gql } from "apollo-boost";
 import { useMutation } from "@apollo/react-hooks";
 import React from "react";
 
-// How do I organize these gql "functions"?
+import { AUTH_TOKEN } from "../../index";
+
+// TODO: Reorganize this
 const LOGIN_MUTATION = gql`
   mutation LogIn($email: String!, $phone: String!) {
     login(email: $email, phone: $phone) {
@@ -15,8 +17,13 @@ const LOGIN_MUTATION = gql`
   }
 `;
 
-const Login = () => {
-  const [login, { data }] = useMutation(LOGIN_MUTATION);
+const Login = props => {
+  const [login, { error, loading }] = useMutation(LOGIN_MUTATION, {
+    onCompleted({ login }) {
+      localStorage.setItem(AUTH_TOKEN, login.token);
+      props.history.push("/home");
+    }
+  });
 
   const onSubmit = event => {
     event.preventDefault();
@@ -28,10 +35,15 @@ const Login = () => {
     });
   };
 
-  // Do something with the data. Use the token to log the user in.
-  // Do something when user is not found.
-  /* eslint-disable no-console */
-  console.log(data);
+  // TODO: Get a real loading asset
+  if (loading) {
+    return <p>Loading...</p>;
+  }
+
+  // TODO: Get a real error meessage
+  if (error) {
+    return <p>{error.message}</p>;
+  }
 
   return (
     <form onSubmit={onSubmit}>
