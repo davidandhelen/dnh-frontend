@@ -1,21 +1,34 @@
+// @flow
+import ApolloClient from "apollo-boost";
+import { ApolloProvider } from "@apollo/react-hooks";
 import React from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter } from "react-router-dom";
-import { Provider } from "react-redux";
-import { createStore } from "redux";
 
-import rootReducer from "./reducers";
 import App from "./App";
 
 import "./style/reset.scss";
 
-const store = createStore(rootReducer);
+export const AUTH_TOKEN = "auth_token";
+
+const client = new ApolloClient({
+  // TODO: Is this safe?
+  uri: "https://davidandhelen.now.sh",
+  request: operation => {
+    const token = localStorage.getItem(AUTH_TOKEN);
+    operation.setContext({
+      headers: {
+        authorization: token ? token : ""
+      }
+    });
+  }
+});
 
 ReactDOM.render(
-  <Provider store={store}>
+  <ApolloProvider client={client}>
     <BrowserRouter>
       <App />
     </BrowserRouter>
-  </Provider>,
+  </ApolloProvider>,
   document.getElementById("root")
 );
