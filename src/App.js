@@ -9,6 +9,7 @@ import Gallery from "./pages/Gallery";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Splash from "./pages/Splash";
+import Repondez from "./pages/Repondez";
 
 const ME_QUERY = gql`
   query me {
@@ -52,6 +53,7 @@ const App = () => {
       <Route component={Splash} exact={true} path="/" />
       <Route component={Login} path="/login" />
       <ProtectedRoute component={Home} path="/home" />
+      <ProtectedRoute component={Repondez} path="/rsvp" />
       <DevRoute component={Gallery} path="/gallery" />
     </Switch>
   );
