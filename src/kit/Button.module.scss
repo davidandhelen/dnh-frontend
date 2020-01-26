@@ -1,0 +1,20 @@
+@import "../style/constants";
+
+.button {
+  background-color: $color-transparent;
+  border: 1px solid $color-black;
+  color: $color-black;
+  font-family: $font-sans-serif;
+  font-size: 1rem;
+  min-height: 60px;
+  min-width: 160px;
+  outline: none;
+}
+
+.button:hover,
+.button:focus {
+  background-color: $color-black;
+  border-color: $color-black;
+  color: $color-white;
+  transition: all 0.2s linear;
+}
