@@ -4,6 +4,7 @@ import { useMutation } from "@apollo/react-hooks";
 import React from "react";
 
 import Loading from "../../kit/Loading";
+import Button from "../../kit/Button";
 
 import { AUTH_TOKEN } from "../../index";
 
@@ -50,7 +51,7 @@ const Login = props => {
         required={true}
         type="tel"
       />
-      <button type="submit">I&apos;m in</button>
+      <Button type="submit">I&apos;m in</Button>
     </form>
   );
 };

@@ -120,7 +120,6 @@ module.exports = {
     // React rules.
     "react/jsx-boolean-value": [2, "always"],
     "react/jsx-key": 2,
-    "react/jsx-no-bind": [2, { ignoreRefs: true }],
     "react/jsx-no-comment-textnodes": 2,
     "react/jsx-no-duplicate-props": 2,
     "react/jsx-no-target-blank": 2,
