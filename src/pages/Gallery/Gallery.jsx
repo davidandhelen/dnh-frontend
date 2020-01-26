@@ -7,7 +7,7 @@ import {
   Heading4,
   Heading5,
   Heading6,
-  SubTitle,
+  SubText,
   BodyText
 } from "../../kit/typography";
 
@@ -20,8 +20,8 @@ const Gallery = () => {
       <Heading4>This is a heading level 4</Heading4>
       <Heading5>This is a heading level 5</Heading5>
       <Heading6>This is a heading level 6</Heading6>
-      <SubTitle>This is a sub title</SubTitle>
       <BodyText>This is a body text</BodyText>
+      <SubText>This is a sub title</SubText>
     </div>
   );
 };

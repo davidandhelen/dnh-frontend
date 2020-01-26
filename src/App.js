@@ -12,6 +12,7 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Splash from "./pages/Splash";
 import Wedding from "./pages/Wedding";
+import Repondez from "./pages/Repondez";
 
 const ME_QUERY = gql`
   query me {
@@ -70,7 +71,7 @@ const App = () => {
 
       <ProtectedRoute component={Home} path="/home" />
       <ProtectedRoute component={Wedding} path="/wedding" />
-
+      <ProtectedRoute component={Repondez} path="/rsvp" />
       <DevRoute component={Gallery} path="/gallery" />
     </Switch>
   );
