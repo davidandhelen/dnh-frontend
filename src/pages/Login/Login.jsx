@@ -3,16 +3,14 @@ import { gql } from "apollo-boost";
 import { useMutation } from "@apollo/react-hooks";
 import React from "react";
 
+import Loading from "../../kit/Loading";
+
 import { AUTH_TOKEN } from "../../index";
 
-// TODO: Reorganize this
 const LOGIN_MUTATION = gql`
-  mutation LogIn($email: String!, $phone: String!) {
-    login(email: $email, phone: $phone) {
+  mutation LogIn($phone: String!) {
+    login(phone: $phone) {
       token
-      user {
-        firstName
-      }
     }
   }
 `;
@@ -29,7 +27,6 @@ const Login = props => {
     event.preventDefault();
     login({
       variables: {
-        email: event.target.email.value,
         phone: event.target.phone.value
       }
     });
@@ -37,7 +34,7 @@ const Login = props => {
 
   // TODO: Get a real loading asset
   if (loading) {
-    return <p>Loading...</p>;
+    return <Loading />;
   }
 
   // TODO: Get a real error meessage
@@ -47,7 +44,6 @@ const Login = props => {
 
   return (
     <form onSubmit={onSubmit}>
-      <input name="email" required={true} type="email" />
       <input
         name="phone"
         pattern="[0-9]{3}[0-9]{3}[0-9]{4}"

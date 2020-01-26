@@ -1,22 +1,41 @@
 // @flow
+import { gql } from "apollo-boost";
+import { useQuery } from "@apollo/react-hooks";
 import React from "react";
 import { Redirect, Route, Switch } from "react-router-dom";
 
+import Loading from "./kit/Loading";
 import Gallery from "./pages/Gallery";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Splash from "./pages/Splash";
 
-import { AUTH_TOKEN } from "./index";
+const ME_QUERY = gql`
+  query me {
+    me {
+      id
+      firstName
+      lastName
+      rsvpStatus
+      allowedPlusOnes
+      guestType
+      phone
+      note
+    }
+  }
+`;
 
-// TODO: Put the routes in a separate file
 const ProtectedRoute = ({ component, path, ...rest }) => {
-  // TODO: Is this safe?
-  const token = localStorage.getItem(AUTH_TOKEN);
-  if (!token) {
+  const { loading, data } = useQuery(ME_QUERY);
+  if (loading) {
+    return <Loading />;
+  }
+  if (!loading) {
+    if (data && data.me) {
+      return <Route component={component} path={path} {...rest} />;
+    }
     return <Redirect to={{ pathname: "/" }} />;
   }
-  return <Route component={component} path={path} {...rest} />;
 };
 
 const DevRoute = props => {
