@@ -26,14 +26,20 @@ const ME_QUERY = gql`
   }
 `;
 
-const ProtectedRoute = ({ component, path, ...rest }) => {
+const ProtectedRoute = ({ component, path }) => {
   const { loading, data } = useQuery(ME_QUERY);
   if (loading) {
     return <Loading />;
   }
   if (!loading) {
     if (data && data.me) {
-      return <Route component={component} path={path} {...rest} />;
+      const Component = component;
+      return (
+        <Route
+          path={path}
+          render={props => <Component user={data.me} {...props} />}
+        />
+      );
     }
     return <Redirect to={{ pathname: "/" }} />;
   }
