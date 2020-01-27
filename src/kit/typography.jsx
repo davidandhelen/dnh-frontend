@@ -40,12 +40,12 @@ export const Heading6 = ({ classes, children }: TypographyProps) => {
   return <h6 className={className}>{children}</h6>;
 };
 
-export const SubText = ({ classes, children }: TypographyProps) => {
-  const className = classNames(css.subText, classes);
-  return <h6 className={className}>{children}</h6>;
-};
-
 export const BodyText = ({ classes, children }: TypographyProps) => {
   const className = classNames(css.p, classes);
   return <p className={className}>{children}</p>;
+};
+
+export const SubText = ({ classes, children }: TypographyProps) => {
+  const className = classNames(css.subText, classes);
+  return <h6 className={className}>{children}</h6>;
 };
