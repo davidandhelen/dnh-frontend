@@ -39,15 +39,11 @@ const ProtectedRoute = ({ component, path }) => {
   if (!loading) {
     if (data && data.me) {
       const Component = component;
-
       return (
-        <>
-          <MainNav />
-          <Route
-            path={path}
-            render={props => <Component user={data.me} {...props} />}
-          />
-        </>
+        <Route
+          path={path}
+          render={props => <Component user={data.me} {...props} />}
+        />
       );
     }
 

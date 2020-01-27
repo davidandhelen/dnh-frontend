@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 // @flow
 import React, { useState } from "react";
 
@@ -9,59 +10,50 @@ import PlusOne from "./PlusOne";
 
 import css from "./Repondez.module.scss";
 
-const renderPlusOneSection = count => {
-  const sections = [];
-  for (let i = 0; i < count; i++) {
-    sections.push(<PlusOne key={i} />);
-  }
-  return sections;
-};
-
 const Repondez = props => {
+  const onChange = event => {
+    // TODO: Set state for each input
+  };
+
   const onSubmit = event => {
     event.preventDefault();
     // TODO: RSVP users here.
   };
 
-  /**
-   * Check how many plus ones this guest is allowed,
-   * and render as many plus one sections as is allowed.
-   */
+  const renderPlusOneSection = count => {
+    const sections = [];
+    for (let i = 0; i < count; i++) {
+      sections.push(<PlusOne count={i} key={i} onChange={onChange} />);
+    }
+    return sections;
+  };
 
   const { user: { allowedPlusOnes } = {} } = props;
-
-  const [isReservingPlusOne, updatePlusOneReservation] = useState(false);
-
-  const plusOneButtonText =
-    props.user.allowedPlusOnes > 1 ? "Reserve guests" : "Reserve a guest";
+  const [isShowingGuestForm, toggleGuestForm] = useState(false);
+  const [form, updateForm] = useState({});
 
   return (
     <div className={css.container}>
       <Heading1>
         {props.user.firstName}, reserve your spot at the table.
       </Heading1>
+      {!!allowedPlusOnes && (
+        <>
+          <Heading2>
+            You have {allowedPlusOnes} guest{allowedPlusOnes > 1 ? "s " : " "}
+            to your name.
+          </Heading2>
+          <Button onClick={() => toggleGuestForm(true)}>
+            Enter guest information
+          </Button>
+        </>
+      )}
       <form className={css.form} onSubmit={onSubmit}>
-        {!!allowedPlusOnes && (
-          <>
-            <Heading2>You have {allowedPlusOnes} guests to your name.</Heading2>
-            <Button onClick={() => updatePlusOneReservation(true)}>
-              {plusOneButtonText}
-            </Button>
-          </>
-        )}
-        {isReservingPlusOne && renderPlusOneSection(allowedPlusOnes)}
+        {isShowingGuestForm && renderPlusOneSection(allowedPlusOnes)}
         <Button type="submit">Reserve</Button>
       </form>
     </div>
   );
-};
-
-Repondez.defaultProps = {
-  user: {
-    firstName: "Royce",
-    lastName: "Kim",
-    allowedPlusOnes: 3
-  }
 };
 
 export default Repondez;
