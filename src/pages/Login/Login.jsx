@@ -3,6 +3,7 @@ import { gql } from "apollo-boost";
 import { useMutation } from "@apollo/react-hooks";
 import React from "react";
 
+import Input from "../../kit/Input";
 import Loading from "../../kit/Loading";
 import Button from "../../kit/Button";
 
@@ -45,7 +46,7 @@ const Login = props => {
 
   return (
     <form onSubmit={onSubmit}>
-      <input
+      <Input
         name="phone"
         pattern="[0-9]{3}[0-9]{3}[0-9]{4}"
         required={true}
