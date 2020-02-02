@@ -16,6 +16,12 @@ ol[class] {
   padding: 0;
 }
 
+/* Set the root size */
+html,
+body {
+  font-size: 20px;
+}
+
 /* Remove default margin */
 body,
 h1,
