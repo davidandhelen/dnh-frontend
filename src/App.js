@@ -4,11 +4,14 @@ import { useQuery } from "@apollo/react-hooks";
 import React from "react";
 import { Redirect, Route, Switch } from "react-router-dom";
 
+import MainNav from "./MainNav";
+
 import Loading from "./kit/Loading";
 import Gallery from "./pages/Gallery";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Splash from "./pages/Splash";
+import Wedding from "./pages/Wedding";
 
 const ME_QUERY = gql`
   query me {
@@ -37,10 +40,13 @@ const ProtectedRoute = ({ component, path }) => {
       const Component = component;
 
       return (
-        <Route
-          path={path}
-          render={props => <Component user={data.me} {...props} />}
-        />
+        <>
+          <MainNav />
+          <Route
+            path={path}
+            render={props => <Component user={data.me} {...props} />}
+          />
+        </>
       );
     }
 
@@ -61,7 +67,10 @@ const App = () => {
     <Switch>
       <Route component={Splash} exact={true} path="/" />
       <Route component={Login} path="/login" />
+
       <ProtectedRoute component={Home} path="/home" />
+      <ProtectedRoute component={Wedding} path="/wedding" />
+
       <DevRoute component={Gallery} path="/gallery" />
     </Switch>
   );

@@ -1,0 +1,10 @@
+@import "../../style/constants";
+
+.container {
+  align-items: center;
+  background: $color-white;
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 60px);
+  justify-content: center;
+}
