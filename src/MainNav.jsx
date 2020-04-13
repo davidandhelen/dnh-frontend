@@ -36,7 +36,7 @@ const MainNav = () => {
         {LINKS.map((link, index) => (
           <li className={css.linkWrapper} key={`${index}_${link.label}`}>
             <Link className={css.link} to={link.path}>
-              <SubTitle>{link.label}</SubTitle>
+              <SubTitle className={css.text}>{link.label}</SubTitle>
             </Link>
           </li>
         ))}
