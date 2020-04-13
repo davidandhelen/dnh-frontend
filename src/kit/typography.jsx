@@ -6,46 +6,38 @@ import classNames from "classnames";
 import css from "./typography.module.scss";
 
 type TypographyProps = {
-  classes?: string,
+  className?: string,
   children: Node
 };
 
-export const Heading1 = ({ classes, children }: TypographyProps) => {
-  const className = classNames(css.h1, classes);
-  return <h1 className={className}>{children}</h1>;
+export const Heading1 = ({ className, children }: TypographyProps) => {
+  return <h1 className={classNames(css.h1, className)}>{children}</h1>;
 };
 
-export const Heading2 = ({ classes, children }: TypographyProps) => {
-  const className = classNames(css.h2, classes);
-  return <h2 className={className}>{children}</h2>;
+export const Heading2 = ({ className, children }: TypographyProps) => {
+  return <h2 className={classNames(css.h2, className)}>{children}</h2>;
 };
 
-export const Heading3 = ({ classes, children }: TypographyProps) => {
-  const className = classNames(css.h3, classes);
-  return <h3 className={className}>{children}</h3>;
+export const Heading3 = ({ className, children }: TypographyProps) => {
+  return <h3 className={classNames(css.h3, className)}>{children}</h3>;
 };
 
-export const Heading4 = ({ classes, children }: TypographyProps) => {
-  const className = classNames(css.h4, classes);
-  return <h4 className={className}>{children}</h4>;
+export const Heading4 = ({ className, children }: TypographyProps) => {
+  return <h4 className={classNames(css.h4, className)}>{children}</h4>;
 };
 
-export const Heading5 = ({ classes, children }: TypographyProps) => {
-  const className = classNames(css.h5, classes);
-  return <h5 className={className}>{children}</h5>;
+export const Heading5 = ({ className, children }: TypographyProps) => {
+  return <h5 className={classNames(css.h5, className)}>{children}</h5>;
 };
 
-export const Heading6 = ({ classes, children }: TypographyProps) => {
-  const className = classNames(css.h6, classes);
-  return <h6 className={className}>{children}</h6>;
+export const Heading6 = ({ className, children }: TypographyProps) => {
+  return <h6 className={classNames(css.h6, className)}>{children}</h6>;
 };
 
-export const BodyText = ({ classes, children }: TypographyProps) => {
-  const className = classNames(css.p, classes);
-  return <p className={className}>{children}</p>;
+export const BodyText = ({ className, children }: TypographyProps) => {
+  return <p className={classNames(css.p, className)}>{children}</p>;
 };
 
-export const SubTitle = ({ classes, children }: TypographyProps) => {
-  const className = classNames(css.subTitle, classes);
-  return <h6 className={className}>{children}</h6>;
+export const SubTitle = ({ className, children }: TypographyProps) => {
+  return <h6 className={classNames(css.subTitle, className)}>{children}</h6>;
 };

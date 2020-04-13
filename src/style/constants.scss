@@ -1,10 +1,18 @@
 /* stylelint-disable color-no-hex */
 
 // Fonts
-$font-sans-serif: "Montserrat", sans-serif;
+$font-sans-serif: "Lato", sans-serif;
 $font-serif: "Playfair Display", serif;
 
+// Sans-serif font weights
+$font-weight-light: 300;
+$font-weight-regular: 400;
+$font-weight-bold: 700;
+
 // Primary colors
+// $color-rose-vale: #aa5042;
+// $color-pastel-brown: #8e6e53;
+// $color-orange-red: #ff3f00;
 
 // Secondary colors
 
@@ -14,7 +22,7 @@ $color-black: #000;
 $color-transparent: rgba($color-white, 0);
 
 // Breakpoints
-$breakpoint-mobile: 480px;
+$breakpoint-mobile: 425px;
 $breakpoint-tablet: 768px;
 $breakpoint-desktop: 1024px;
 $breakpoint-desktop-large: 1440px;
