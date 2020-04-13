@@ -1,0 +1,22 @@
+@import "../../style/constants";
+
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 0 auto;
+  max-width: $breakpoint-desktop-large;
+}
+
+.fullWidth {
+  width: 100%;
+}
+
+.halfWidth {
+  background-color: $color-black;
+  width: 50%;
+
+  @media screen and (max-width: $breakpoint-mobile) {
+    width: 100%;
+  }
+}
