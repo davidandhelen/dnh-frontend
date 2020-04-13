@@ -12,6 +12,7 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Splash from "./pages/Splash";
 import Wedding from "./pages/Wedding";
+import Repondez from "./pages/Repondez";
 
 const ME_QUERY = gql`
   query me {
@@ -56,9 +57,11 @@ const ProtectedRoute = ({ component, path }) => {
 
 const DevRoute = props => {
   const isDev = process.env.NODE_ENV === "development";
+
   if (isDev) {
     return <Route {...props} />;
   }
+
   return <Redirect to={{ pathname: "/" }} />;
 };
 
@@ -67,10 +70,11 @@ const App = () => {
     <Switch>
       <Route component={Splash} exact={true} path="/" />
       <Route component={Login} path="/login" />
-
       <ProtectedRoute component={Home} path="/home" />
       <ProtectedRoute component={Wedding} path="/wedding" />
-
+      <ProtectedRoute component={Home} path="/photos" />
+      <ProtectedRoute component={Repondez} path="/rsvp" />
+      <ProtectedRoute component={Home} path="/faq" />
       <DevRoute component={Gallery} path="/gallery" />
     </Switch>
   );

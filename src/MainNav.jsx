@@ -17,15 +17,15 @@ const LINKS = [
   },
   {
     label: "Photos",
-    path: "/home"
+    path: "/photos"
   },
   {
     label: "RSVP",
-    path: "/home"
+    path: "/rsvp"
   },
   {
     label: "FAQ",
-    path: "/home"
+    path: "/faq"
   }
 ];
 
@@ -33,8 +33,8 @@ const MainNav = () => {
   return (
     <nav className={css.nav}>
       <ul className={css.wrapper}>
-        {LINKS.map((link, idx) => (
-          <li className={css.linkWrapper} key={idx}>
+        {LINKS.map((link, index) => (
+          <li className={css.linkWrapper} key={`${index}_${link.label}`}>
             <Link className={css.link} to={link.path}>
               <SubTitle>{link.label}</SubTitle>
             </Link>
