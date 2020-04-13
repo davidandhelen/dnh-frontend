@@ -45,7 +45,7 @@ export const BodyText = ({ classes, children }: TypographyProps) => {
   return <p className={className}>{children}</p>;
 };
 
-export const SubText = ({ classes, children }: TypographyProps) => {
-  const className = classNames(css.subText, classes);
+export const SubTitle = ({ classes, children }: TypographyProps) => {
+  const className = classNames(css.subTitle, classes);
   return <h6 className={className}>{children}</h6>;
 };

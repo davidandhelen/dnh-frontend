@@ -1,14 +1,16 @@
 // @flow
 import React from "react";
 
-import { BodyText, Heading1, SubText } from "../../kit/typography";
+import { BodyText, Heading1, SubTitle } from "../../kit/typography";
+
+import css from "./Home.module.scss";
 
 const Home = () => {
   return (
-    <div>
+    <div className={css.container}>
       <Heading1>David & Helen</Heading1>
       <BodyText>October 10, 2020</BodyText>
-      <SubText>Information!</SubText>
+      <SubTitle>Information!</SubTitle>
     </div>
   );
 };

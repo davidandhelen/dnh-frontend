@@ -39,11 +39,15 @@ const ProtectedRoute = ({ component, path }) => {
   if (!loading) {
     if (data && data.me) {
       const Component = component;
+
       return (
-        <Route
-          path={path}
-          render={props => <Component user={data.me} {...props} />}
-        />
+        <>
+          <MainNav />
+          <Route
+            path={path}
+            render={props => <Component user={data.me} {...props} />}
+          />
+        </>
       );
     }
 
@@ -53,9 +57,11 @@ const ProtectedRoute = ({ component, path }) => {
 
 const DevRoute = props => {
   const isDev = process.env.NODE_ENV === "development";
+
   if (isDev) {
     return <Route {...props} />;
   }
+
   return <Redirect to={{ pathname: "/" }} />;
 };
 
@@ -64,10 +70,11 @@ const App = () => {
     <Switch>
       <Route component={Splash} exact={true} path="/" />
       <Route component={Login} path="/login" />
-
       <ProtectedRoute component={Home} path="/home" />
       <ProtectedRoute component={Wedding} path="/wedding" />
+      <ProtectedRoute component={Home} path="/photos" />
       <ProtectedRoute component={Repondez} path="/rsvp" />
+      <ProtectedRoute component={Home} path="/faq" />
       <DevRoute component={Gallery} path="/gallery" />
     </Switch>
   );
