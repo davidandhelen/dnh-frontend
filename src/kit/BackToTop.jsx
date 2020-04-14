@@ -1,7 +1,7 @@
 // @flow
 import React from "react";
 
-import CTALink from "./CTALink";
+import CTAButton from "./CTAButton";
 
 import css from "./BackToTop.module.scss";
 
@@ -15,7 +15,7 @@ const BackToTop = () => {
 
   return (
     <div className={css.container}>
-      <CTALink onClick={onClick}>Back to top</CTALink>
+      <CTAButton onClick={onClick}>Back to top</CTAButton>
     </div>
   );
 };

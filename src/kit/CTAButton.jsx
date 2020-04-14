@@ -4,23 +4,21 @@ import type { Node } from "react";
 
 import { SubTitle } from "./typography";
 
-import css from "./CTALink.module.scss";
+import css from "./CTAButton.module.scss";
 
 type Props = {
   children: Node,
   onClick: () => void
 };
 
-const CTALink = ({ children, onClick }: Props) => {
-  // TODO: This should return a <button/> or <a/>
-
+const CTAButton = ({ children, onClick }: Props) => {
   return (
     <div className={css.wrapper}>
-      <button className={css.link} onClick={onClick}>
+      <button className={css.button} onClick={onClick}>
         <SubTitle className={css.text}>{children}</SubTitle>
       </button>
     </div>
   );
 };
 
-export default CTALink;
+export default CTAButton;
