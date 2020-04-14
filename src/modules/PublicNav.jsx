@@ -23,17 +23,19 @@ const LINKS = [
 
 const PublicNav = () => {
   return (
-    <nav className={css.nav}>
-      <ul className={css.wrapper}>
-        {LINKS.map((link, index) => (
-          <li className={css.linkWrapper} key={`${index}_${link.label}`}>
-            <Link className={css.link} to={link.path}>
-              <SubTitle className={css.text}>{link.label}</SubTitle>
-            </Link>
-          </li>
-        ))}
-      </ul>
-    </nav>
+    <header>
+      <nav aria-label="Main" className={css.nav}>
+        <ul className={css.wrapper}>
+          {LINKS.map((link, index) => (
+            <li className={css.linkWrapper} key={`${index}_${link.label}`}>
+              <Link className={css.link} to={link.path}>
+                <SubTitle className={css.text}>{link.label}</SubTitle>
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </nav>
+    </header>
   );
 };
 
