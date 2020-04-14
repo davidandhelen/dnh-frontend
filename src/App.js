@@ -4,7 +4,8 @@ import { useQuery } from "@apollo/react-hooks";
 import React from "react";
 import { Redirect, Route, Switch } from "react-router-dom";
 
-import MainNav from "./MainNav";
+import MainNav from "./modules/MainNav";
+import PublicNav from "./modules/PublicNav";
 
 import Loading from "./kit/Loading";
 import Gallery from "./pages/Gallery";
@@ -29,6 +30,17 @@ const ME_QUERY = gql`
     }
   }
 `;
+
+const PublicRoute = ({ component, path }) => {
+  const Component = component;
+
+  return (
+    <>
+      <PublicNav />
+      <Route path={path} render={props => <Component {...props} />} />
+    </>
+  );
+};
 
 const ProtectedRoute = ({ component, path }) => {
   const { loading, data } = useQuery(ME_QUERY);
@@ -69,13 +81,15 @@ const DevRoute = props => {
 const App = () => {
   return (
     <Switch>
-      <Route component={Splash} exact={true} path="/" />
-      <Route component={Login} path="/login" />
+      <PublicRoute component={Splash} exact={true} path="/" />
+      <PublicRoute component={Photos} path="/photos" />
+      <PublicRoute component={Login} path="/login" />
+
       <ProtectedRoute component={Home} path="/home" />
       <ProtectedRoute component={Wedding} path="/wedding" />
-      <ProtectedRoute component={Photos} path="/photos" />
       <ProtectedRoute component={Repondez} path="/rsvp" />
       <ProtectedRoute component={Home} path="/faq" />
+
       <DevRoute component={Gallery} path="/gallery" />
     </Switch>
   );

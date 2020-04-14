@@ -2,7 +2,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-import { SubTitle } from "./kit/typography";
+import { SubTitle } from "../kit/typography";
 
 import css from "./MainNav.module.scss";
 
