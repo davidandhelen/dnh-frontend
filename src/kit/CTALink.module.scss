@@ -1,0 +1,42 @@
+@import "../style/constants";
+
+.wrapper {
+  display: inline-block;
+  position: relative;
+}
+
+.link {
+  border: none;
+  cursor: pointer;
+  display: inline-block;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+
+  &:focus {
+    outline: rgba($color-black, 0.2) auto 3px;
+  }
+
+  &::after {
+    background-color: rgba($color-black, 0.08);
+    bottom: 0;
+    content: "";
+    height: 3px;
+    left: -3px;
+    margin: auto;
+    position: absolute;
+    transition: 200ms ease-in-out;
+    width: calc(100% + 6px);
+  }
+
+  &:hover::after {
+    background-color: rgba($color-black, 0.16);
+    height: 100%;
+  }
+}
+
+.text {
+  font-weight: $font-weight-regular;
+}
