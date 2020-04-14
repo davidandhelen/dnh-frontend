@@ -1,7 +1,7 @@
 // @flow
 import { gql } from "apollo-boost";
 import { useQuery } from "@apollo/react-hooks";
-import React from "react";
+import React, { Suspense, lazy } from "react";
 import { Redirect, Route, Switch } from "react-router-dom";
 
 import MainNav from "./modules/MainNav";
@@ -9,12 +9,13 @@ import PublicNav from "./modules/PublicNav";
 
 import Loading from "./kit/Loading";
 import Gallery from "./pages/Gallery";
-import Home from "./pages/Home";
-import Login from "./pages/Login";
-import Splash from "./pages/Splash";
-import Wedding from "./pages/Wedding";
-import Repondez from "./pages/Repondez";
-import Photos from "./pages/Photos";
+
+const Home = lazy(() => import("./pages/Home"));
+const Login = lazy(() => import("./pages/Login"));
+const Splash = lazy(() => import("./pages/Splash"));
+const Wedding = lazy(() => import("./pages/Wedding"));
+const Repondez = lazy(() => import("./pages/Repondez"));
+const Photos = lazy(() => import("./pages/Photos"));
 
 const ME_QUERY = gql`
   query me {
@@ -37,7 +38,9 @@ const PublicRoute = ({ component, path }) => {
   return (
     <>
       <PublicNav />
-      <Route path={path} render={props => <Component {...props} />} />
+      <Suspense fallback={<Loading />}>
+        <Route path={path} render={props => <Component {...props} />} />
+      </Suspense>
     </>
   );
 };
@@ -56,10 +59,12 @@ const ProtectedRoute = ({ component, path }) => {
       return (
         <>
           <MainNav />
-          <Route
-            path={path}
-            render={props => <Component user={data.me} {...props} />}
-          />
+          <Suspense fallback={<Loading />}>
+            <Route
+              path={path}
+              render={props => <Component user={data.me} {...props} />}
+            />
+          </Suspense>
         </>
       );
     }
