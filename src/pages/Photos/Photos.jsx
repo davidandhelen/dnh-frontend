@@ -1,6 +1,8 @@
 // @flow
 import React from "react";
 
+import BackToTop from "../../kit/BackToTop";
+
 import image1525 from "./assets/1525.jpg";
 import image1531 from "./assets/1531.jpg";
 import image1838 from "./assets/1838.jpg";
@@ -62,6 +64,7 @@ const Photos = () => {
         alt="Staring off into the distance and laughing at other people."
         imgSrc={image1525}
       />
+      <BackToTop />
     </div>
   );
 };
