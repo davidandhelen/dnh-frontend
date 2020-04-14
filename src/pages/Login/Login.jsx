@@ -9,6 +9,8 @@ import Button from "../../kit/Button";
 
 import { AUTH_TOKEN } from "../../index";
 
+import css from "./Login.module.scss";
+
 const LOGIN_MUTATION = gql`
   mutation LogIn($phone: String!) {
     login(phone: $phone) {
@@ -45,15 +47,17 @@ const Login = props => {
   }
 
   return (
-    <form onSubmit={onSubmit}>
-      <Input
-        name="phone"
-        pattern="[0-9]{3}[0-9]{3}[0-9]{4}"
-        required={true}
-        type="tel"
-      />
-      <Button type="submit">I&apos;m in</Button>
-    </form>
+    <div className={css.container}>
+      <form onSubmit={onSubmit}>
+        <Input
+          name="phone"
+          pattern="[0-9]{3}[0-9]{3}[0-9]{4}"
+          required={true}
+          type="tel"
+        />
+        <Button type="submit">I&apos;m in</Button>
+      </form>
+    </div>
   );
 };
 
