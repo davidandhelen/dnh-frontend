@@ -32,12 +32,21 @@ const ME_QUERY = gql`
   }
 `;
 
-const PublicRoute = ({ component, path }) => {
+type RouteType = {
+  component: Node,
+  path: string
+};
+
+type PublicRouteProps = {
+  isProtected: boolean
+} & RouteType;
+
+const PublicRoute = ({ component, isProtected, path }: PublicRouteProps) => {
   const Component = component;
 
   return (
     <>
-      <PublicNav />
+      {isProtected ? <MainNav /> : <PublicNav />}
       <Suspense fallback={<Loading />}>
         <Route path={path} render={props => <Component {...props} />} />
       </Suspense>
@@ -45,7 +54,7 @@ const PublicRoute = ({ component, path }) => {
   );
 };
 
-const ProtectedRoute = ({ component, path }) => {
+const ProtectedRoute = ({ component, path }: RouteType) => {
   const { loading, data } = useQuery(ME_QUERY);
 
   if (loading) {
@@ -73,7 +82,7 @@ const ProtectedRoute = ({ component, path }) => {
   }
 };
 
-const DevRoute = props => {
+const DevRoute = (props: RouteType) => {
   const isDev = process.env.NODE_ENV === "development";
 
   if (isDev) {
@@ -87,7 +96,7 @@ const App = () => {
   return (
     <Switch>
       <PublicRoute component={Splash} exact={true} path="/" />
-      <PublicRoute component={Photos} path="/photos" />
+      <PublicRoute component={Photos} isProtected={true} path="/photos" />
       <PublicRoute component={Login} path="/login" />
 
       <ProtectedRoute component={Home} path="/home" />
