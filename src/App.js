@@ -10,6 +10,7 @@ import PublicNav from "./modules/PublicNav";
 import Loading from "./kit/Loading";
 import Gallery from "./pages/Gallery";
 
+const FAQ = lazy(() => import("./pages/FAQ"));
 const Home = lazy(() => import("./pages/Home"));
 const Login = lazy(() => import("./pages/Login"));
 const Splash = lazy(() => import("./pages/Splash"));
@@ -102,7 +103,7 @@ const App = () => {
       <ProtectedRoute component={Home} path="/home" />
       <ProtectedRoute component={Wedding} path="/wedding" />
       <ProtectedRoute component={Repondez} path="/rsvp" />
-      <ProtectedRoute component={Home} path="/faq" />
+      <ProtectedRoute component={FAQ} path="/faq" />
 
       <DevRoute component={Gallery} path="/gallery" />
     </Switch>
