@@ -1,0 +1,14 @@
+@import "../../style/constants";
+
+.container {
+  margin: 0 auto;
+  max-width: $breakpoint-desktop;
+}
+
+.heading {
+  margin-bottom: 42px;
+}
+
+.wrapper {
+  margin-bottom: 24px;
+}
