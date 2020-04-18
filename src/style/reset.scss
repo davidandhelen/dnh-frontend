@@ -1,3 +1,5 @@
+@import "./constants";
+
 /* https://dev.to/hankchizljaw/a-modern-css-reset-6p3 */
 /* Box sizing rules */
 *,
@@ -20,6 +22,10 @@ ol[class] {
 html,
 body {
   font-size: 20px;
+
+  @media screen and (max-width: $breakpoint-tablet) {
+    font-size: 18px;
+  }
 }
 
 /* Remove default margin */
@@ -47,6 +53,10 @@ body {
   overflow-x: hidden;
   scroll-behavior: smooth;
   text-rendering: optimizeSpeed;
+
+  @media screen and (max-width: $breakpoint-tablet) {
+    line-height: 1.6;
+  }
 }
 
 /* A elements that don't have a class get default styles */
