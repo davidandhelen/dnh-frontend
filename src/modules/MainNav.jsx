@@ -9,7 +9,7 @@ import css from "./MainNav.module.scss";
 const LINKS = [
   {
     label: "Home",
-    path: "/home"
+    path: "/"
   },
   {
     label: "Wedding",

@@ -3,9 +3,33 @@
 .container {
   margin: 0 auto 86px;
   max-width: $breakpoint-tablet;
+
+  @media screen and (max-width: $breakpoint-tablet) {
+    padding: 0 24px;
+  }
+
+  @media screen and (max-width: $breakpoint-mobile) {
+    padding: 0 16px;
+  }
 }
 
 .section {
   margin: 24px 0;
   text-align: center;
+
+  @media screen and (max-width: $breakpoint-mobile) {
+    text-align: left;
+  }
+}
+
+.image {
+  @media screen and (max-width: $breakpoint-tablet) {
+    margin-left: -24px;
+    max-width: 100vw;
+    width: 100vw;
+  }
+
+  @media screen and (max-width: $breakpoint-mobile) {
+    margin-left: -16px;
+  }
 }

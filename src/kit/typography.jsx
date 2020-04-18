@@ -39,5 +39,7 @@ export const BodyText = ({ className, children }: TypographyProps) => {
 };
 
 export const SubTitle = ({ className, children }: TypographyProps) => {
-  return <h6 className={classNames(css.subTitle, className)}>{children}</h6>;
+  return (
+    <span className={classNames(css.subTitle, className)}>{children}</span>
+  );
 };
