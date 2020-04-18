@@ -12,7 +12,10 @@ const Wedding = () => {
   return (
     <div className={css.container}>
       <div className={css.section}>
-        <img alt="" src={image1793} />
+        <img
+          alt="Helen and David in Washington Square Park, in black and white."
+          src={image1793}
+        />
       </div>
       <div className={css.section}>
         <Heading1>Wedding</Heading1>
