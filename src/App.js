@@ -6,7 +6,7 @@ import { Route, Switch } from "react-router-dom";
 
 import MainNav from "./modules/MainNav";
 
-import Loading from "./kit/Loading";
+import CenteredPageLoader from "./kit/CenteredPageLoader";
 
 const FAQ = lazy(() => import("./pages/FAQ"));
 const Home = lazy(() => import("./pages/Home"));
@@ -38,15 +38,14 @@ const LazyRoute = ({ component, path }: RouteType) => {
   const { loading, data } = useQuery(ME_QUERY);
 
   if (loading) {
-    return <Loading />;
+    return <CenteredPageLoader />;
   }
 
   const Component = component;
 
   return (
     <>
-      <MainNav />
-      <Suspense fallback={<Loading />}>
+      <Suspense fallback={<CenteredPageLoader />}>
         <Route
           path={path}
           render={props => <Component user={data?.me || null} {...props} />}
@@ -58,13 +57,16 @@ const LazyRoute = ({ component, path }: RouteType) => {
 
 const App = () => {
   return (
-    <Switch>
-      <LazyRoute component={Home} exact={true} path="/" />
-      <LazyRoute component={Wedding} path="/wedding" />
-      <LazyRoute component={Photos} path="/photos" />
-      <LazyRoute component={Respond} path="/rsvp" />
-      <LazyRoute component={FAQ} path="/faq" />
-    </Switch>
+    <>
+      <MainNav />
+      <Switch>
+        <LazyRoute component={Home} exact={true} path="/" />
+        <LazyRoute component={Wedding} path="/wedding" />
+        <LazyRoute component={Photos} path="/photos" />
+        <LazyRoute component={Respond} path="/rsvp" />
+        <LazyRoute component={FAQ} path="/faq" />
+      </Switch>
+    </>
   );
 };
 

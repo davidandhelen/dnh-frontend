@@ -4,7 +4,7 @@ import { useMutation } from "@apollo/react-hooks";
 import React from "react";
 
 import Input from "../../kit/Input";
-import Loading from "../../kit/Loading";
+import CenteredPageLoader from "../../kit/CenteredPageLoader";
 import Button from "../../kit/Button";
 
 import { AUTH_TOKEN } from "../../index";
@@ -19,6 +19,8 @@ const LOGIN_MUTATION = gql`
   }
 `;
 
+// TODO: We don't need this page anymore, but will leave this for now
+// so that I could copy over the logic into RSVP.
 const Login = props => {
   const [login, { error, loading }] = useMutation(LOGIN_MUTATION, {
     onCompleted({ login }) {
@@ -38,7 +40,7 @@ const Login = props => {
 
   // TODO: Get a real loading asset
   if (loading) {
-    return <Loading />;
+    return <CenteredPageLoader />;
   }
 
   // TODO: Get a real error meessage
