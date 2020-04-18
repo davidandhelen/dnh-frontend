@@ -10,6 +10,10 @@
   font-family: $font-serif;
 }
 
+.h1 {
+  letter-spacing: 1.5px;
+}
+
 .subTitle,
 .p {
   color: $color-black; // Temporary until secondary colors

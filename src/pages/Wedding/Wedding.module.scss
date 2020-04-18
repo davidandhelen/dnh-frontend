@@ -1,0 +1,11 @@
+@import "../../style/constants";
+
+.container {
+  margin: 0 auto 86px;
+  max-width: $breakpoint-tablet;
+}
+
+.section {
+  margin: 24px 0;
+  text-align: center;
+}
