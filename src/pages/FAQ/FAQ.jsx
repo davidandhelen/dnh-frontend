@@ -13,7 +13,11 @@ import css from "./FAQ.module.scss";
 const FAQ = () => (
   <div className={css.container}>
     <Heading1 className={css.heading}>Frequently Asked Questions</Heading1>
-    <img className={css.image} src={image1712} />
+    <img
+      alt="Helen and David on a bench in Washington Square Park."
+      className={css.image}
+      src={image1712}
+    />
     {FAQS.map((questionSet, index) => (
       <div className={css.wrapper} key={`faq_${index}`}>
         <Heading2 className={css.question}>{questionSet.question}</Heading2>
