@@ -31,38 +31,21 @@
   visibility: visible;
 }
 
-/**
- * This is solely for the first image on the page. We need it to
- * scroll-fade in without relying on JavaScript changes.
- */
-@keyframes fadein {
-  from {
-    opacity: 0;
-    transform: translateY(20vh);
-    visibility: hidden;
-  }
-
-  to {
-    opacity: 1;
-    visibility: visible;
-  }
-}
-
 .fullWidth {
   height: auto;
   /**
    * Need `min-height` in order to get lazy loading to work.
    * This prevents the image from starting with a height of 0 pixels.
    */
-  min-height: 248px;
+  min-height: 596px;
   width: 100%;
 
-  &:nth-of-type(1) {
-    animation: fadein 1s;
+  @media screen and (max-width: $breakpoint-desktop) {
+    min-height: 446px;
+  }
 
-    @media screen and (max-width: $breakpoint-mobile) {
-      animation: none;
-    }
+  @media screen and (max-width: $breakpoint-tablet) {
+    min-height: 248px;
   }
 
   @media screen and (max-width: $breakpoint-mobile) {
@@ -77,6 +60,10 @@
    */
   min-height: 574px;
   width: 50%;
+
+  @media screen and (max-width: $breakpoint-tablet) {
+    min-height: 318px;
+  }
 
   @media screen and (max-width: $breakpoint-mobile) {
     min-height: 478px;

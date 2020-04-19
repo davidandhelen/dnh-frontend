@@ -17,18 +17,15 @@ import image2001 from "./assets/2001.jpg";
 import image2082 from "./assets/2082.jpg";
 import image2119 from "./assets/2119.jpg";
 
-type ImageType = {
+type LazyImageType = {
   alt: string,
-  src: string,
-  isFullWidth?: Boolean
-};
-
-type LazyImageType = ImageType & {
   /**
    * When set to `true`, will delay transition on the image to create
    * a staggered fade-in effect.
    */
-  delayTransition?: boolean
+  delayTransition?: boolean,
+  isFullWidth?: boolean,
+  src: string
 };
 
 const LazyImage = ({
@@ -59,20 +56,10 @@ const LazyImage = ({
   );
 };
 
-const Image = ({ alt, isFullWidth, src }: ImageType) => {
-  const classes = isFullWidth ? css.fullWidth : css.halfWidth;
-
-  return (
-    <div className={classes}>
-      <img alt={alt} src={src} />
-    </div>
-  );
-};
-
 const Photos = () => {
   return (
     <div className={css.container}>
-      <Image
+      <LazyImage
         alt="Staring off into the distance while sitting on the curb."
         isFullWidth={true}
         src={image2119}
