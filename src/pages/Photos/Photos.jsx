@@ -1,7 +1,11 @@
 // @flow
-import React from "react";
+import classNames from "classnames";
+import React, { useRef } from "react";
 
 import BackToTop from "../../kit/BackToTop";
+import { useIntersectionObserver } from "../../kit/useIntersectionObserver";
+
+import css from "./Photos.module.scss";
 
 import image1525 from "./assets/1525.jpg";
 import image1531 from "./assets/1531.jpg";
@@ -13,20 +17,54 @@ import image2001 from "./assets/2001.jpg";
 import image2082 from "./assets/2082.jpg";
 import image2119 from "./assets/2119.jpg";
 
-import css from "./Photos.module.scss";
-
 type ImageType = {
   alt: string,
-  imgSrc: string,
+  src: string,
   isFullWidth?: Boolean
 };
 
-const Image = ({ alt, imgSrc, isFullWidth }: ImageType) => {
+type LazyImageType = ImageType & {
+  /**
+   * When set to `true`, will delay transition on the image to create
+   * a staggered fade-in effect.
+   */
+  delayTransition?: boolean
+};
+
+const LazyImage = ({
+  alt,
+  delayTransition,
+  isFullWidth,
+  src
+}: LazyImageType) => {
+  const ref = useRef(null);
+
+  const [isInView] = useIntersectionObserver(ref, {
+    threshold: 0.4,
+    rootMargin: "10%"
+  });
+
+  const classes = classNames({
+    [css.fullWidth]: isFullWidth,
+    [css.halfWidth]: !isFullWidth,
+    [css.fadeSection]: true,
+    [css.fadeSection_delayTransition]: delayTransition,
+    [css.fadeSection_isVisible]: isInView
+  });
+
+  return (
+    <div className={classes}>
+      <img alt={alt} data-src={src} ref={ref} src={isInView ? src : null} />
+    </div>
+  );
+};
+
+const Image = ({ alt, isFullWidth, src }: ImageType) => {
   const classes = isFullWidth ? css.fullWidth : css.halfWidth;
 
   return (
     <div className={classes}>
-      <img alt={alt} src={imgSrc} />
+      <img alt={alt} src={src} />
     </div>
   );
 };
@@ -36,33 +74,42 @@ const Photos = () => {
     <div className={css.container}>
       <Image
         alt="Staring off into the distance while sitting on the curb."
-        imgSrc={image2119}
         isFullWidth={true}
+        src={image2119}
       />
-      <Image
+      <LazyImage
         alt="Helen is laughing at something funnny David said."
-        imgSrc={image1956}
+        src={image1956}
       />
-      <Image alt="Leaning in for a kiss." imgSrc={image2082} />
-      <Image
+      <LazyImage
+        alt="Leaning in for a kiss."
+        delayTransition={true}
+        src={image2082}
+      />
+      <LazyImage
         alt="Staring off into the distance in front of the Washington Square Arch."
-        imgSrc={image1531}
         isFullWidth={true}
+        src={image1531}
       />
-      <Image alt="Eskimo kisses." imgSrc={image1838} />
-      <Image alt="Looking straight into the camera." imgSrc={image1996} />
-      <Image
+      <LazyImage alt="Eskimo kisses." src={image1838} />
+      <LazyImage
+        alt="Looking straight into the camera."
+        delayTransition={true}
+        src={image1996}
+      />
+      <LazyImage
         alt="David wrapping his arms around Helen's waist, in black and white."
-        imgSrc={image1974}
         isFullWidth={true}
+        src={image1974}
       />
-      <Image
+      <LazyImage
         alt="Nonchalantly looking away from each other."
-        imgSrc={image2001}
+        src={image2001}
       />
-      <Image
+      <LazyImage
         alt="Staring off into the distance and laughing at other people."
-        imgSrc={image1525}
+        delayTransition={true}
+        src={image1525}
       />
       <BackToTop />
     </div>
