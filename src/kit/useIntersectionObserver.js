@@ -21,8 +21,6 @@ export const useIntersectionObserver = (
   if (isIntersectionObserverSupported) {
     observer = new IntersectionObserver(
       (entries, observerInstance) => {
-        // const [{ intersectionRatio, isIntersecting }] = entries;
-
         // Check to see if the element is intersecting
         if (entries[0].intersectionRatio > 0) {
           // If element is intersectin, update the state. Set triggered to true, as to not re-observe the element.
