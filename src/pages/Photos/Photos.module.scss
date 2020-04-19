@@ -6,14 +6,47 @@
   justify-content: center;
   margin: 0 auto;
   max-width: $breakpoint-desktop-large;
+  min-height: 100vh;
+}
+
+.fadeSection {
+  opacity: 0;
+  transform: translateY(20vh);
+  transition: opacity 0.6s ease-out, transform 1.2s ease-out;
+  visibility: hidden;
+  will-change: opacity, visibility;
+}
+
+.fadeSection_delayTransition {
+  transition-delay: 0.6s;
+
+  @media screen and (max-width: $breakpoint-mobile) {
+    transition-delay: 0;
+  }
+}
+
+.fadeSection_isVisible {
+  opacity: 1;
+  transform: none;
+  visibility: visible;
 }
 
 .fullWidth {
+  height: auto;
+  /**
+   * Need `min-height` in order to get lazy loading to work.
+   * This prevents the image from starting with a height of 0 pixels.
+   */
+  min-height: 250px;
   width: 100%;
 }
 
 .halfWidth {
-  background-color: $color-black;
+  /**
+   * Need `min-height` in order to get lazy loading to work.
+   * This prevents the image from starting with a height of 0 pixels.
+   */
+  min-height: 560px;
   width: 50%;
 
   @media screen and (max-width: $breakpoint-mobile) {

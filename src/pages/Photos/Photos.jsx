@@ -1,5 +1,6 @@
 // @flow
-import React, { useEffect, useRef } from "react";
+import classNames from "classnames";
+import React, { useRef } from "react";
 
 import BackToTop from "../../kit/BackToTop";
 import { useIntersectionObserver } from "../../kit/useIntersectionObserver";
@@ -22,44 +23,48 @@ type ImageType = {
   isFullWidth?: Boolean
 };
 
-const Image = ({ alt, isFullWidth, src }: ImageType) => {
+type LazyImageType = ImageType & {
+  /**
+   * When set to `true`, will delay transition on the image to create
+   * a staggered fade-in effect.
+   */
+  delayTransition?: boolean
+};
+
+const LazyImage = ({
+  alt,
+  delayTransition,
+  isFullWidth,
+  src
+}: LazyImageType) => {
   const ref = useRef(null);
 
   const [isInView] = useIntersectionObserver(ref, {
-    threshold: 0.5,
-    rootMargin: "20%"
+    threshold: 0.4,
+    rootMargin: "10%"
   });
 
-  let width = "";
+  const classes = classNames({
+    [css.fullWidth]: isFullWidth,
+    [css.halfWidth]: !isFullWidth,
+    [css.fadeSection]: true,
+    [css.fadeSection_delayTransition]: delayTransition,
+    [css.fadeSection_isVisible]: isInView
+  });
 
-  useEffect(() => {
-    if (ref.current) {
-      width = window.getComputedStyle(ref.current).getPropertyValue("width");
-    }
+  return (
+    <div className={classes}>
+      <img alt={alt} data-src={src} ref={ref} src={isInView ? src : null} />
+    </div>
+  );
+};
 
-    // if (isInView) {
-    //   console.log(alt, isInView);
-    // }
-  }, [isInView, ref]);
-
-  if (ref.current) {
-    width = window.getComputedStyle(ref.current).getPropertyValue("width");
-  }
-
-  const widthNumber = Number(width.replace("px", ""));
-  let height = widthNumber * 1.49833;
-  if (isFullWidth) {
-    height = widthNumber * 0.66749662;
-  }
-
-  // console.log("width", width);
-  // console.log("computing height...", height);
-
+const Image = ({ alt, isFullWidth, src }: ImageType) => {
   const classes = isFullWidth ? css.fullWidth : css.halfWidth;
 
   return (
-    <div className={classes} style={{ height: height }}>
-      <img alt={alt} ref={ref} src={isInView ? src : null} />
+    <div className={classes}>
+      <img alt={alt} src={src} />
     </div>
   );
 };
@@ -72,26 +77,38 @@ const Photos = () => {
         isFullWidth={true}
         src={image2119}
       />
-      <Image
+      <LazyImage
         alt="Helen is laughing at something funnny David said."
         src={image1956}
       />
-      <Image alt="Leaning in for a kiss." src={image2082} />
-      <Image
+      <LazyImage
+        alt="Leaning in for a kiss."
+        delayTransition={true}
+        src={image2082}
+      />
+      <LazyImage
         alt="Staring off into the distance in front of the Washington Square Arch."
         isFullWidth={true}
         src={image1531}
       />
-      <Image alt="Eskimo kisses." src={image1838} />
-      <Image alt="Looking straight into the camera." src={image1996} />
-      <Image
+      <LazyImage alt="Eskimo kisses." src={image1838} />
+      <LazyImage
+        alt="Looking straight into the camera."
+        delayTransition={true}
+        src={image1996}
+      />
+      <LazyImage
         alt="David wrapping his arms around Helen's waist, in black and white."
         isFullWidth={true}
         src={image1974}
       />
-      <Image alt="Nonchalantly looking away from each other." src={image2001} />
-      <Image
+      <LazyImage
+        alt="Nonchalantly looking away from each other."
+        src={image2001}
+      />
+      <LazyImage
         alt="Staring off into the distance and laughing at other people."
+        delayTransition={true}
         src={image1525}
       />
       <BackToTop />
