@@ -54,11 +54,19 @@
    * Need `min-height` in order to get lazy loading to work.
    * This prevents the image from starting with a height of 0 pixels.
    */
-  min-height: 250px;
+  min-height: 248px;
   width: 100%;
 
   &:nth-of-type(1) {
-    animation: fadein 2s;
+    animation: fadein 1s;
+
+    @media screen and (max-width: $breakpoint-mobile) {
+      animation: none;
+    }
+  }
+
+  @media screen and (max-width: $breakpoint-mobile) {
+    min-height: 186px;
   }
 }
 
@@ -67,10 +75,11 @@
    * Need `min-height` in order to get lazy loading to work.
    * This prevents the image from starting with a height of 0 pixels.
    */
-  min-height: 560px;
+  min-height: 574px;
   width: 50%;
 
   @media screen and (max-width: $breakpoint-mobile) {
+    min-height: 478px;
     width: 100%;
   }
 }
