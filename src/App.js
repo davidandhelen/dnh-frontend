@@ -1,20 +1,20 @@
 // @flow
-import { gql } from 'apollo-boost';
-import { useQuery } from '@apollo/react-hooks';
-import React, { Suspense, lazy } from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { gql } from "apollo-boost";
+import { useQuery } from "@apollo/react-hooks";
+import React, { Suspense, lazy } from "react";
+import { Route, Switch } from "react-router-dom";
 
-import MainNav from './modules/MainNav';
+import MainNav from "./modules/MainNav";
 
-import CenteredPageLoader from './kit/CenteredPageLoader';
+import CenteredPageLoader from "./kit/CenteredPageLoader";
 
-const FAQ = lazy(() => import('./pages/FAQ'));
-const Home = lazy(() => import('./pages/Home'));
-const Wedding = lazy(() => import('./pages/Wedding'));
-const Respond = lazy(() => import('./pages/Respond'));
-const Respondez = lazy(() => import('./pages/Repondez'));
-const Photos = lazy(() => import('./pages/Photos'));
-const Login = lazy(() => import('./pages/Login'));
+const FAQ = lazy(() => import("./pages/FAQ"));
+const Home = lazy(() => import("./pages/Home"));
+const Wedding = lazy(() => import("./pages/Wedding"));
+const Respond = lazy(() => import("./pages/Respond"));
+const Respondez = lazy(() => import("./pages/Repondez"));
+const Photos = lazy(() => import("./pages/Photos"));
+const Login = lazy(() => import("./pages/Login"));
 
 const ME_QUERY = gql`
   query me {
@@ -39,7 +39,7 @@ const ME_QUERY = gql`
 
 type RouteType = {
   component: Node,
-  path: string,
+  path: string
 };
 
 const LazyRoute = ({ component, path }: RouteType) => {
@@ -56,7 +56,7 @@ const LazyRoute = ({ component, path }: RouteType) => {
       <Suspense fallback={<CenteredPageLoader />}>
         <Route
           path={path}
-          render={(props) => (
+          render={props => (
             <Component refetch={refetch} user={data?.me || null} {...props} />
           )}
         />
@@ -70,13 +70,13 @@ const App = () => {
     <>
       <MainNav />
       <Switch>
-        <LazyRoute component={Home} exact={true} path='/' />
-        <LazyRoute component={Wedding} path='/wedding' />
-        <LazyRoute component={Photos} path='/photos' />
-        <LazyRoute component={Respond} path='/rsvp' />
-        <LazyRoute component={Login} path='/login' />
-        <LazyRoute component={FAQ} path='/faq' />
-        <LazyRoute component={Respondez} path='/rsvpez' />
+        <LazyRoute component={Home} exact={true} path="/" />
+        <LazyRoute component={Wedding} path="/wedding" />
+        <LazyRoute component={Photos} path="/photos" />
+        <LazyRoute component={Respond} path="/rsvp" />
+        <LazyRoute component={Login} path="/login" />
+        <LazyRoute component={FAQ} path="/faq" />
+        <LazyRoute component={Respondez} path="/rsvpez" />
       </Switch>
     </>
   );
