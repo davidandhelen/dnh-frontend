@@ -1,4 +1,4 @@
-@import "../../style/constants";
+@import '../../style/constants';
 
 .container {
   align-items: center;
@@ -6,5 +6,34 @@
   display: flex;
   flex-direction: column;
   height: calc(100vh - 60px);
+  justify-content: flex-start;
+}
+
+.heading {
+  margin-bottom: 32px;
+  margin-top: 32px;
+  text-align: center;
+}
+
+.form {
+  display: flex;
   justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.phoneInput {
+  outline: none;
+  border: none;
+  width: 55%;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.5);
+  font-size: 98px;
+  font-family: 'Playfair Display', serif;
+  color: rgba(0, 0, 0, 0.8);
+  margin-bottom: 32px;
+}
+
+
+.phoneInput::placeholder {
+  color: rgba(0,0,0,.15 )
 }

@@ -5,10 +5,11 @@ import { useMutation } from "@apollo/react-hooks";
 import React, { useState } from "react";
 import { Field, Form } from "react-final-form";
 
-import { Heading1, BodyText } from "../../kit/typography";
-
+import { Heading1, Heading2, BodyText } from "../../kit/typography";
+import { RadioGroup, RadioButton } from "react-radio-buttons";
 import Button from "../../kit/Button";
 import Input from "../../kit/Input";
+import CenteredPageLoader from "../../kit/CenteredPageLoader";
 
 import PlusOne from "./PlusOne";
 
@@ -49,70 +50,50 @@ const RSVP_MUTATION = gql`
 // const UPDATE_RSVP_STATUS_MUTATION = gql``;
 
 const GuestForm = ({ guestCount, onSubmit }) => {
-  const guestSections = [];
-
-  for (let i = 0; i < guestCount; i++) {
-    guestSections.push(
-      <Field key={i} name={`firstName${i}`}>
-        {props => (
-          <Input
-            name={props.input.name}
-            onChange={props.input.onChange}
-            placeholder="First Name"
-            value={props.input.value}
-          />
-        )}
-      </Field>
-    );
-  }
+  const [rsvpInput, setRsvpInput] = useState("");
+  const onChange = e => {
+    setRsvpInput(e.target.value);
+  };
 
   return (
-    <Form onSubmit={onSubmit}>
-      {props => (
-        <form onSubmit={props.handleSubmit}>
-          {guestSections}
-          {/* <BodyText>Guest 1</BodyText>
-          <Field name="firstName">
-            {props => (
-              <Input
-                name={props.input.name}
-                onChange={props.input.onChange}
-                placeholder="First Name"
-                value={props.input.value}
-              />
-            )}
-          </Field> */}
-          {/* <Field name="lastName">
-            {props => (
-              <Input
-                name={props.input.name}
-                onChange={props.input.onChange}
-                placeholder="Last Name"
-                value={props.input.value}
-              />
-            )}
-          </Field>
-          <Field name="phone" validate={required}>
-            {({ input }) => (
-              <Input
-                name={input.name}
-                onChange={input.onChange}
-                placeholder="Phone number"
-                type="tel"
-                value={input.value}
-              />
-            )}
-          </Field> */}
-          <Button type="submit">Reserve</Button>
-        </form>
-      )}
-    </Form>
+    <div className={css.formContainer}>
+      <Form onSubmit={onSubmit}>
+        {props => (
+          <form
+            className={css.form}
+            onChange={onChange}
+            onSubmit={props.handleSubmit}
+          >
+            <Heading2>Will you be attending?</Heading2>
+            <div className={css.radioGroup}>
+              <span className={css.radioTrue}>
+                <input
+                  checked={rsvpInput === "yes"}
+                  name="Yes"
+                  type="radio"
+                  value="yes"
+                />
+                Yes
+              </span>
+              <span className={css.radioFalse}>
+                <input
+                  checked={rsvpInput === "no"}
+                  name="No"
+                  type="radio"
+                  value="no"
+                />
+                No
+              </span>
+            </div>
+            <Button type="submit">Reserve</Button>
+          </form>
+        )}
+      </Form>
+    </div>
   );
 };
 
 const Repondez = props => {
-  const { user: { allowedPlusOnes } = {} } = props;
-
   const [isShowingGuestForm, toggleGuestForm] = useState(false);
   const [guest, updateGuest] = useState([]);
 
@@ -121,7 +102,10 @@ const Repondez = props => {
       console.log(createGuest);
     }
   });
-
+  if (!props.user) {
+    return <CenteredPageLoader />;
+  }
+  const { user: { allowedPlusOnes } = {} } = props;
   const onSubmit = values => {
     console.log("Submitting form");
     console.log(values);
@@ -149,7 +133,7 @@ const Repondez = props => {
   return (
     <div className={css.container}>
       <Heading1>{headingText}</Heading1>
-      <GuestForm guestCount={allowedPlusOnes} onSubmit={onSubmit} />
+      <GuestForm onSubmit={onSubmit} />
     </div>
   );
 };
