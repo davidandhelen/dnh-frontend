@@ -57,6 +57,22 @@ const UPDATE_RSVP_STATUS_MUTATION = gql`
   }
 `;
 
+const AlreadyRsvpedWarning = ({ toggleAlreadyRsvpedWarning }) => (
+  <div className={css.warningContainer}>
+    <div className={css.warning}>
+      <Heading1>You already RSVPed, would you like to change it?</Heading1>
+      <Button
+        onClick={() => {
+          toggleAlreadyRsvpedWarning(false);
+        }}
+        type="submit"
+      >
+        →
+      </Button>
+    </div>
+  </div>
+);
+
 const GuestForm = ({ guestCount, onSubmit, rsvpInput, setRsvpInput }) => {
   const onChange = e => {
     setRsvpInput(e.target.value);
@@ -102,11 +118,12 @@ const GuestForm = ({ guestCount, onSubmit, rsvpInput, setRsvpInput }) => {
 
 const Repondez = props => {
   const [isShowingGuestForm, toggleGuestForm] = useState(false);
-
+  const [alreadyRsvpedWarning, toggleAlreadyRsvpedWarning] = useState(
+    props.user.rsvpStatus === true || props.user.rsvpStatus === false
+  );
   // Loading guest's rsvp status to check if they've already rsvped
   let preLoadedRsvpStatus;
-  if (props.user.rsvpStatus !== undefined && props.user.rsvpStatus !== false) {
-    // some code here to pop open a warning "You already rsvped!"
+  if (props.user.rsvpStatus !== undefined && props.user.rsvpStatus !== null) {
     if (props.user.rsvpStatus === true) {
       preLoadedRsvpStatus = "yes";
     } else if (props.user.rsvpStatus === false) {
@@ -115,7 +132,6 @@ const Repondez = props => {
   }
 
   const [rsvpInput, setRsvpInput] = useState(preLoadedRsvpStatus);
-
   const [guest, updateGuest] = useState([]);
 
   const [updateGuestRsvp, { error, loading }] = useMutation(
@@ -135,23 +151,11 @@ const Repondez = props => {
   const onSubmit = values => {
     console.log("Submitting form");
     console.log(values);
-    console.log(rsvpInput);
     const rsvpStatus = rsvpInput === "yes" || false;
-    console.log(rsvpStatus);
 
     updateGuestRsvp({
       variables: { id: props.user.id, rsvpStatus: rsvpStatus }
     });
-    // TODO: RSVP users here.
-    // createGuest({
-    //   variables: {
-    //     firstName: "",
-    //     lastName: "",
-    //     phone: "",
-    //     guestType: "",
-    //     rsvpStatus: true
-    //   }
-    // });
   };
 
   let headingText;
@@ -165,12 +169,20 @@ const Repondez = props => {
 
   return (
     <div className={css.container}>
-      <Heading1>{headingText}</Heading1>
-      <GuestForm
-        onSubmit={onSubmit}
-        rsvpInput={rsvpInput}
-        setRsvpInput={setRsvpInput}
-      />
+      {alreadyRsvpedWarning ? (
+        <AlreadyRsvpedWarning
+          toggleAlreadyRsvpedWarning={toggleAlreadyRsvpedWarning}
+        />
+      ) : (
+        <>
+          <Heading1>{headingText}</Heading1>
+          <GuestForm
+            onSubmit={onSubmit}
+            rsvpInput={rsvpInput}
+            setRsvpInput={setRsvpInput}
+          />
+        </>
+      )}
     </div>
   );
 };
