@@ -1,0 +1,19 @@
+.plusOneForm {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+}
+
+.plusOneForm > input {
+  border: none;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.7);
+  margin-bottom: 32px;
+  outline: none;
+  width: 100%;
+}
+
+.plusOneForm > h2{
+  margin-bottom: 16px;
+}

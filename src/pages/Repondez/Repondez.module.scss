@@ -4,9 +4,14 @@
   align-items: center;
   display: flex;
   flex-direction: column;
+  height: 100%;
 }
 
 .formContainer {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   margin-top: 64px;
 }
 
@@ -16,12 +21,12 @@
   flex-direction: column;
   font-family: "Playfair Display", serif;
   justify-content: center;
+  margin-bottom: 64px;
 }
 
-.radioGroup {
+.rsvpRadioGroup {
   display: flex;
   flex-direction: row;
-  margin-top: 24px;
 }
 
 .radioTrue,
