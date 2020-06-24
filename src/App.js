@@ -23,8 +23,8 @@ const ME_QUERY = gql`
       firstName
       lastName
       rsvpStatus
-      allowedPlusOnes
-      plusOnes {
+      allowedPlusOne
+      plusOne {
         id
         firstName
         lastName
@@ -44,7 +44,6 @@ type RouteType = {
 
 const LazyRoute = ({ component, path }: RouteType) => {
   const { loading, data, refetch } = useQuery(ME_QUERY);
-
   if (loading) {
     return <CenteredPageLoader />;
   }

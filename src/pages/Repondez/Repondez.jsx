@@ -48,11 +48,21 @@ const required = value => (value ? undefined : "Required");
 // `;
 
 const UPDATE_RSVP_STATUS_MUTATION = gql`
-  mutation UPDATE_RSVP_STATUS($id: ID!, $rsvpStatus: Boolean!) {
-    updateUser(id: $id, rsvpStatus: $rsvpStatus) {
+  mutation UPDATE_RSVP_STATUS(
+    $id: ID!
+    $rsvpStatus: Boolean!
+    $plusOne: UserCreateInput
+  ) {
+    updateUser(id: $id, rsvpStatus: $rsvpStatus, plusOne: $plusOne) {
       id
       firstName
       rsvpStatus
+      plusOne {
+        id
+        firstName
+        lastName
+        phone
+      }
     }
   }
 `;
@@ -79,7 +89,7 @@ const GuestForm = ({
   rsvpInput,
   setRsvpInput,
   setPlusOneInput,
-  plusOneInput,
+  plusOneStatus,
   setPlusOneFirstName,
   setPlusOneLastName,
   setPlusOnePhone,
@@ -128,13 +138,13 @@ const GuestForm = ({
           </span>
         </div>
       </div>
-      {rsvpInput === "yes" && user.allowedPlusOnes > 0 ? (
+      {rsvpInput === "yes" && user.allowedPlusOne ? (
         <div className={css.form}>
           <Heading2>Will you be bringing a guest?</Heading2>
           <div className={css.rsvpRadioGroup}>
             <span className={css.radioTrue}>
               <input
-                checked={plusOneInput === "yes"}
+                checked={plusOneStatus === "yes"}
                 name="plusOneYes"
                 onChange={onPlusOneChange}
                 type="radio"
@@ -144,7 +154,7 @@ const GuestForm = ({
             </span>
             <span className={css.radioFalse}>
               <input
-                checked={plusOneInput === "no"}
+                checked={plusOneStatus === "no"}
                 name="plusOneNo"
                 onChange={onPlusOneChange}
                 type="radio"
@@ -155,7 +165,7 @@ const GuestForm = ({
           </div>
         </div>
       ) : null}
-      {plusOneInput === "yes" ? (
+      {plusOneStatus === "yes" ? (
         <PlusOne
           plusOneFirstName={plusOneFirstName}
           plusOneLastName={plusOneLastName}
@@ -169,10 +179,10 @@ const GuestForm = ({
         disabled={
           rsvpInput === undefined ||
           rsvpInput === undefined ||
-          (plusOneInput === "yes" &&
+          (plusOneStatus === "yes" &&
             (!plusOneFirstName || !plusOneLastName || !plusOnePhone)) ||
-          (user.allowedPlusOnes > 0 &&
-            (plusOneInput === undefined || plusOneInput === null))
+          (user.allowedPlusOne &&
+            (plusOneStatus === undefined || plusOneStatus === null))
         }
         onClick={onSubmit}
       >
@@ -209,48 +219,65 @@ const Repondez = props => {
     }
   }
 
-  let preLoadedPlusOneInput;
-  if (
-    user &&
-    preLoadedRsvpStatus === true &&
-    user.allowedPlusOnes > 0 &&
-    user.plusOnes.length > 0
-  ) {
-    preLoadedPlusOneInput = "yes";
+  let preLoadedPlusOneStatus;
+  if (user && user.rsvpStatus === true && user.allowedPlusOne && user.plusOne) {
+    preLoadedPlusOneStatus = "yes";
   } else if (
     user &&
-    preLoadedRsvpStatus === true &&
-    user.allowedPlusOnes > 0 &&
-    user.plusOnes.length < 1
+    user.rsvpStatus === true &&
+    user.allowedPlusOne &&
+    !user.plusOne
   ) {
-    preLoadedPlusOneInput = "no";
+    preLoadedPlusOneStatus = "no";
   } else {
-    preLoadedPlusOneInput = undefined;
+    preLoadedPlusOneStatus = undefined;
+  }
+
+  const preLoadedPlusOneInput = {
+    firstName: "",
+    lastName: "",
+    phone: ""
+  };
+  if (user && user.plusOne) {
+    preLoadedPlusOneInput.firstName = user.plusOne.firstName;
+    preLoadedPlusOneInput.lastName = user.plusOne.lastName;
+    preLoadedPlusOneInput.phone = `+1${user.plusOne.phone}`;
   }
 
   const [rsvpInput, setRsvpInput] = useState(preLoadedRsvpStatus);
-  const [plusOneInput, setPlusOneInput] = useState(preLoadedPlusOneInput);
-  const [plusOneFirstName, setPlusOneFirstName] = useState("");
-  const [plusOneLastName, setPlusOneLastName] = useState("");
-  const [plusOnePhone, setPlusOnePhone] = useState("");
+  const [plusOneStatus, setPlusOneInput] = useState(preLoadedPlusOneStatus);
+  const [plusOneFirstName, setPlusOneFirstName] = useState(
+    preLoadedPlusOneInput.firstName
+  );
+  const [plusOneLastName, setPlusOneLastName] = useState(
+    preLoadedPlusOneInput.lastName
+  );
+  const [plusOnePhone, setPlusOnePhone] = useState(preLoadedPlusOneInput.phone);
 
   if (!user) {
     return <NoPermission />;
   }
   const {
-    user: { allowedPlusOnes }
+    user: { allowedPlusOne }
   } = props;
   const onSubmit = () => {
     console.log("Submitting form");
     const rsvpStatus = rsvpInput === "yes" || false;
-    if (rsvpStatus === true && plusOneInput === "yes") {
+    if (rsvpStatus === true && plusOneStatus === "yes") {
       const plusOneInfo = {
         firstName: plusOneFirstName,
         lastName: plusOneLastName,
         phone: plusOnePhone.slice(2),
         guestType: `${user.firstName} Plus One`,
-        allowedPlusOnes: 0
+        allowedPlusOne: false
       };
+      updateGuestRsvp({
+        variables: {
+          id: user.id,
+          rsvpStatus: rsvpStatus,
+          plusOne: plusOneInfo
+        }
+      });
       console.log(rsvpStatus, plusOneInfo);
     } else {
       updateGuestRsvp({
@@ -260,9 +287,9 @@ const Repondez = props => {
   };
 
   let headingText;
-  if (!allowedPlusOnes) {
+  if (!allowedPlusOne) {
     headingText = `${user.firstName}, reserve your spot at the table.`;
-  } else if (allowedPlusOnes === 1) {
+  } else if (allowedPlusOne) {
     headingText = `${user.firstName}, reserve a spot at the table for you and a guest.`;
   }
 
@@ -278,9 +305,9 @@ const Repondez = props => {
           <GuestForm
             onSubmit={onSubmit}
             plusOneFirstName={plusOneFirstName}
-            plusOneInput={plusOneInput}
             plusOneLastName={plusOneLastName}
             plusOnePhone={plusOnePhone}
+            plusOneStatus={plusOneStatus}
             rsvpInput={rsvpInput}
             setPlusOneFirstName={setPlusOneFirstName}
             setPlusOneInput={setPlusOneInput}
