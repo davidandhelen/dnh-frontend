@@ -13,7 +13,7 @@ export const AUTH_TOKEN = "auth_token";
 
 const client = new ApolloClient({
   // TODO: Is this safe?
-  uri: "http://localhost:4000/",
+  uri: "https://dnhbackend.vercel.app/",
   request: operation => {
     const token = localStorage.getItem(AUTH_TOKEN);
     operation.setContext({
