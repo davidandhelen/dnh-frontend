@@ -22,6 +22,7 @@ const ME_QUERY = gql`
       lastName
       rsvpStatus
       allowedPlusOnes
+      plusOnes
       guestType
       phone
       note
