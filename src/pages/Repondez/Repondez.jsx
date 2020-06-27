@@ -269,7 +269,8 @@ const Repondez = props => {
         lastName: plusOneLastName,
         phone: plusOnePhone.slice(2),
         guestType: `${user.firstName} Plus One`,
-        allowedPlusOne: false
+        allowedPlusOne: false,
+        rsvpStatus: true
       };
       updateGuestRsvp({
         variables: {
