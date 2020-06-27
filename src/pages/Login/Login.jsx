@@ -33,9 +33,6 @@ const Login = props => {
     onError: () => setError("Sorry, we could not find the phone number.")
   });
 
-  // If `country` property is not passed
-  // then "International" format is used.
-
   const onSubmit = event => {
     event.preventDefault();
     const phoneNumber = value.replace(/[^\d]/g, "");
@@ -57,22 +54,28 @@ const Login = props => {
     return <CenteredPageLoader />;
   }
 
-  // TODO: Get a real error meessage
   return (
     <div className={css.container}>
-      <Heading1 className={css.heading}>RSVP</Heading1>
-      <BodyText>
-        {!validationError ? "Enter your phone number." : validationError}
-      </BodyText>
+      <Heading1 className={css.heading}>Celebrate with us</Heading1>
       <form className={css.form} onSubmit={onSubmit}>
-        <PhoneInput
-          className={css.phoneInput}
-          country="US"
-          onChange={setValue}
-          placeholder="(347) 803-0075"
-          value={value}
-        />
-        <Button type="submit">→</Button>
+        <div className={css.wrapper}>
+          <PhoneInput
+            className={css.phoneInput}
+            // If `country` property is not passed, then "International" format is used.
+            country="US"
+            onChange={setValue}
+            placeholder="(714) 257-9448"
+            value={value}
+          />
+          <BodyText className={css.text}>
+            {!validationError
+              ? "Please enter your phone number"
+              : validationError}
+          </BodyText>
+        </div>
+        <Button theme="light" type="submit">
+          Next →
+        </Button>
       </form>
     </div>
   );
