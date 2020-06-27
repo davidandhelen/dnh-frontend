@@ -35,8 +35,6 @@
   width: 100%;
 
   @media screen and (max-width: $breakpoint-mobile) {
-    background-size: cover;
-    height: 100%;
     padding: 24px;
   }
 }
