@@ -15,6 +15,7 @@ const Respond = lazy(() => import("./pages/Respond"));
 const Respondez = lazy(() => import("./pages/Repondez"));
 const Photos = lazy(() => import("./pages/Photos"));
 const Login = lazy(() => import("./pages/Login"));
+const Confirmation = lazy(() => import("./pages/Confirmation"));
 
 const ME_QUERY = gql`
   query me {
@@ -76,6 +77,7 @@ const App = () => {
         <LazyRoute component={Login} path="/login" />
         <LazyRoute component={FAQ} path="/faq" />
         <LazyRoute component={Respondez} path="/rsvpez" />
+        <LazyRoute component={Confirmation} path="/confirmation" />
       </Switch>
     </>
   );

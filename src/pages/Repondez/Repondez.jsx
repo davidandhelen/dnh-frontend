@@ -3,49 +3,13 @@
 import { gql } from "apollo-boost";
 import { useMutation } from "@apollo/react-hooks";
 import React, { useState } from "react";
-import { Field, Form } from "react-final-form";
-
-import { Heading1, Heading2, BodyText } from "../../kit/typography";
+import { Heading1, Heading2 } from "../../kit/typography";
 import PlusOne from "./PlusOne";
 import Button from "../../kit/Button";
-import Input from "../../kit/Input";
 import CenteredPageLoader from "../../kit/CenteredPageLoader";
 
 import css from "./Repondez.module.scss";
 import NoPermission from "../NoPermission/NoPermission";
-
-const required = value => (value ? undefined : "Required");
-
-/**
- * The mutation needs to:
- *   - Update the user's rsvpStatus to true
- *   - Create a new user for the guest, whose rsvpStatus is true
- *   - Create as many new users as there are plus ones
- *
- */
-
-// const RSVP_MUTATION = gql`
-//   mutation CreatePlusOne(
-//     $firstName: String!
-//     $lastName: String!
-//     $phone: String!
-//     $guestType: String!
-//     $rsvpStatus: Boolean!
-//   ) {
-//     createUser(
-//       firstName: $firstName
-//       lastName: $lastName
-//       phone: $phone
-//       guestType: $guestType
-//       rsvpStatus: $rsvpStatus
-//     ) {
-//       token
-//       user {
-//         firstName
-//       }
-//     }
-//   }
-// `;
 
 const UPDATE_RSVP_STATUS_MUTATION = gql`
   mutation UPDATE_RSVP_STATUS(
@@ -107,13 +71,7 @@ const GuestForm = ({
 
   return (
     <div className={css.formContainer}>
-      {/* <Form onSubmit={onSubmit}> */}
-      {/* {props => ( */}
       <div className={css.form}>
-        {/* <form
-              onChange={onRsvpChange}
-              onSubmit={props.handleSubmit}
-            > */}
         <Heading2>Will you be attending?</Heading2>
         <div className={css.rsvpRadioGroup}>
           <span className={css.radioTrue}>
@@ -178,10 +136,11 @@ const GuestForm = ({
       <Button
         disabled={
           rsvpInput === undefined ||
-          rsvpInput === undefined ||
+          rsvpInput === null ||
           (plusOneStatus === "yes" &&
             (!plusOneFirstName || !plusOneLastName || !plusOnePhone)) ||
           (user.allowedPlusOne &&
+            rsvpInput === true &&
             (plusOneStatus === undefined || plusOneStatus === null))
         }
         onClick={onSubmit}
@@ -197,6 +156,7 @@ const Repondez = props => {
     UPDATE_RSVP_STATUS_MUTATION,
     {
       onCompleted(data) {
+        props.history.push("/confirmation");
         console.log(data);
       },
       skip: !props.user
@@ -257,6 +217,11 @@ const Repondez = props => {
   if (!user) {
     return <NoPermission />;
   }
+
+  if (loading) {
+    return <CenteredPageLoader />;
+  }
+
   const {
     user: { allowedPlusOne }
   } = props;
