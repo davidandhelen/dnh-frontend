@@ -2,8 +2,7 @@
 
 .button {
   background-color: $color-transparent;
-  border: 1px solid $color-black;
-  color: $color-black;
+  cursor: pointer;
   font-family: $font-sans-serif;
   font-size: 1rem;
   min-height: 60px;
@@ -11,21 +10,42 @@
   outline: none;
 }
 
+.button_dark {
+  border: 1px solid $color-black;
+  color: $color-black;
+}
+
+.button_light {
+  border: 1px solid $color-white;
+  color: $color-white;
+}
+
 .button:hover,
 .button:focus {
-  background-color: $color-black;
-  border-color: $color-black;
-  color: $color-white;
   transition: all 0.2s linear;
 }
 
-.button:disabled {
+.button_dark:hover,
+.button_dark:focus {
+  background-color: $color-black;
+  border-color: $color-black;
+  color: $color-white;
+}
+
+.button_light:hover,
+.button_dark:focus {
+  background-color: $color-white;
+  border-color: $color-white;
+  color: $color-black;
+}
+
+.button_dark:disabled {
   background-color: rgba(0, 0, 0, 0.2);
   border: none;
   color: rgba(0, 0, 0, 0.6);
 }
 
-.button:disabled:hover {
+.button_dark:disabled:hover {
   background-color: rgba(0, 0, 0, 0.2);
   border: none;
   color: rgba(0, 0, 0, 0.6);
