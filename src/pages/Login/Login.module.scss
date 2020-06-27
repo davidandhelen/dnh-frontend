@@ -7,6 +7,12 @@
   height: calc(100vh - 60px);
   justify-content: center;
   margin: auto;
+  margin-bottom: 86px;
+  max-width: 1440px;
+
+  @media screen and (max-width: $breakpoint-desktop) {
+    margin-bottom: 0;
+  }
 }
 
 .heading {
@@ -16,7 +22,7 @@
 
 .form {
   align-items: center;
-  background-image: url("../Photos/assets/2119.jpg");
+  background-image: url("./assets/2119.jpg");
   background-position: center center;
   background-repeat: no-repeat;
   background-size: cover;
