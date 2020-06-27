@@ -4,9 +4,55 @@
   align-items: center;
   display: flex;
   flex-direction: column;
+  height: 100%;
+}
+
+.formContainer {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-top: 64px;
 }
 
 .form {
+  align-items: center;
   display: flex;
   flex-direction: column;
+  font-family: "Playfair Display", serif;
+  justify-content: center;
+  margin-bottom: 64px;
+}
+
+.rsvpRadioGroup {
+  display: flex;
+  flex-direction: row;
+}
+
+.radioTrue,
+.radioFalse {
+  font-size: 32px;
+  min-width: 100px;
+  text-align: left;
+}
+
+.warningContainer {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-top: 64px;
+}
+
+.warning {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  width: 75%;
+}
+
+.warning > button {
+  margin-top: 32px;
 }

@@ -12,7 +12,9 @@ const FAQ = lazy(() => import("./pages/FAQ"));
 const Home = lazy(() => import("./pages/Home"));
 const Wedding = lazy(() => import("./pages/Wedding"));
 const Respond = lazy(() => import("./pages/Respond"));
+const Respondez = lazy(() => import("./pages/Repondez"));
 const Photos = lazy(() => import("./pages/Photos"));
+const Login = lazy(() => import("./pages/Login"));
 
 const ME_QUERY = gql`
   query me {
@@ -21,8 +23,8 @@ const ME_QUERY = gql`
       firstName
       lastName
       rsvpStatus
-      allowedPlusOnes
-      plusOnes {
+      allowedPlusOne
+      plusOne {
         id
         firstName
         lastName
@@ -41,8 +43,7 @@ type RouteType = {
 };
 
 const LazyRoute = ({ component, path }: RouteType) => {
-  const { loading, data } = useQuery(ME_QUERY);
-
+  const { loading, data, refetch } = useQuery(ME_QUERY);
   if (loading) {
     return <CenteredPageLoader />;
   }
@@ -54,7 +55,9 @@ const LazyRoute = ({ component, path }: RouteType) => {
       <Suspense fallback={<CenteredPageLoader />}>
         <Route
           path={path}
-          render={props => <Component user={data?.me || null} {...props} />}
+          render={props => (
+            <Component refetch={refetch} user={data?.me || null} {...props} />
+          )}
         />
       </Suspense>
     </>
@@ -70,7 +73,9 @@ const App = () => {
         <LazyRoute component={Wedding} path="/wedding" />
         <LazyRoute component={Photos} path="/photos" />
         <LazyRoute component={Respond} path="/rsvp" />
+        <LazyRoute component={Login} path="/login" />
         <LazyRoute component={FAQ} path="/faq" />
+        <LazyRoute component={Respondez} path="/rsvpez" />
       </Switch>
     </>
   );

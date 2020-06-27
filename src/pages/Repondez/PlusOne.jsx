@@ -1,37 +1,44 @@
 // @flow
 import React from "react";
 
-import { BodyText } from "../../kit/typography";
-
+import { Heading2 } from "../../kit/typography";
 import Input from "../../kit/Input";
+import PhoneInput from "../../kit/PhoneInput";
+import css from "./PlusOne.module.scss";
 
-const PlusOne = ({ count, onChange }) => {
-  const guestNumber = count + 1;
-
+const PlusOne = ({
+  setPlusOneFirstName,
+  setPlusOneLastName,
+  setPlusOnePhone,
+  plusOneFirstName,
+  plusOneLastName,
+  plusOnePhone
+}) => {
   return (
-    <>
-      <BodyText>Guest {guestNumber}</BodyText>
+    <div className={css.plusOneForm}>
+      <Heading2>Your Guest&apos;s Info</Heading2>
       <Input
-        name={`guest${guestNumber}FirstName`}
-        onChange={onChange}
-        placeholder="First name"
+        name={"Guest's First Name"}
+        onChange={e => setPlusOneFirstName(e.target.value)}
+        placeholder="First Name"
         required={true}
+        value={plusOneFirstName}
       />
       <Input
-        name={`guest${guestNumber}LastName`}
-        onChange={onChange}
-        placeholder="Last name"
+        name={"Guest's Last Name"}
+        onChange={e => setPlusOneLastName(e.target.value)}
+        placeholder="Last Name"
         required={true}
+        value={plusOneLastName}
       />
-      <Input
-        name={`guest${guestNumber}Phone`}
-        onChange={onChange}
-        pattern="[0-9]{3}[0-9]{3}[0-9]{4}"
-        placeholder="0000000000"
-        required={true}
-        type="tel"
+      <PhoneInput
+        country="US"
+        name={"Guest's Phone Number"}
+        onChange={setPlusOnePhone}
+        placeholder="Phone Number"
+        value={plusOnePhone}
       />
-    </>
+    </div>
   );
 };
 
