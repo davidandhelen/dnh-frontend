@@ -1,3 +1,4 @@
+/* stylelint-disable */
 @import "../style/constants";
 
 .button {
@@ -8,6 +9,7 @@
   min-height: 60px;
   min-width: 160px;
   outline: none;
+  padding: 0;
 }
 
 .button_dark {
@@ -42,6 +44,7 @@
 .button_dark:disabled {
   background-color: rgba(0, 0, 0, 0.2);
   border: none;
+  cursor: not-allowed;
   color: rgba(0, 0, 0, 0.6);
 }
 

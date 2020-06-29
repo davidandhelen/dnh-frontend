@@ -3,9 +3,10 @@
 import { gql } from "apollo-boost";
 import { useMutation } from "@apollo/react-hooks";
 import React, { useState } from "react";
-import { Heading1, Heading2 } from "../../kit/typography";
+import { Heading1, Heading2, BodyText } from "../../kit/typography";
 import PlusOne from "./PlusOne";
 import Button from "../../kit/Button";
+// import Radio from "../../kit/Radio";
 import CenteredPageLoader from "../../kit/CenteredPageLoader";
 
 import css from "./Repondez.module.scss";
@@ -71,82 +72,96 @@ const GuestForm = ({
 
   return (
     <div className={css.formContainer}>
-      <div className={css.form}>
-        <Heading2>Will you be attending?</Heading2>
-        <div className={css.rsvpRadioGroup}>
-          <span className={css.radioTrue}>
+      <form className={css.form}>
+        <div className={css.inputWrapper}>
+          <BodyText>Will you be attending?</BodyText>
+          <div>
             <input
               checked={rsvpInput === "yes"}
-              name="rsvpYes"
+              id="rsvpYes"
+              name="rsvpInput"
               onChange={onRsvpChange}
               type="radio"
               value="yes"
             />
-            Yes
-          </span>
-          <span className={css.radioFalse}>
+            <label className={css.label} htmlFor="rsvpYes">
+              Yes
+            </label>
+          </div>
+          <div>
             <input
               checked={rsvpInput === "no"}
-              name="rsvpNo"
+              id="rsvpNo"
+              name="rsvpInput"
               onChange={onRsvpChange}
               type="radio"
               value="no"
             />
-            No
-          </span>
-        </div>
-      </div>
-      {rsvpInput === "yes" && user.allowedPlusOne ? (
-        <div className={css.form}>
-          <Heading2>Will you be bringing a guest?</Heading2>
-          <div className={css.rsvpRadioGroup}>
-            <span className={css.radioTrue}>
-              <input
-                checked={plusOneStatus === "yes"}
-                name="plusOneYes"
-                onChange={onPlusOneChange}
-                type="radio"
-                value="yes"
-              />
-              Yes
-            </span>
-            <span className={css.radioFalse}>
-              <input
-                checked={plusOneStatus === "no"}
-                name="plusOneNo"
-                onChange={onPlusOneChange}
-                type="radio"
-                value="no"
-              />
+            <label className={css.label} htmlFor="rsvpNo">
               No
-            </span>
+            </label>
           </div>
         </div>
-      ) : null}
-      {plusOneStatus === "yes" ? (
-        <PlusOne
-          plusOneFirstName={plusOneFirstName}
-          plusOneLastName={plusOneLastName}
-          plusOnePhone={plusOnePhone}
-          setPlusOneFirstName={setPlusOneFirstName}
-          setPlusOneLastName={setPlusOneLastName}
-          setPlusOnePhone={setPlusOnePhone}
-        />
-      ) : null}
-      <Button
-        disabled={
-          rsvpInput === undefined ||
-          rsvpInput === null ||
-          (plusOneStatus === "yes" &&
-            (!plusOneFirstName || !plusOneLastName || !plusOnePhone)) ||
-          (user.allowedPlusOne &&
-            rsvpInput === true &&
-            (plusOneStatus === undefined || plusOneStatus === null))
-        }
-        onClick={onSubmit}
-      >
-        Reserve
-      </Button>
+        {rsvpInput === "yes" && user.allowedPlusOne && (
+          <div className={css.inputWrapper}>
+            <div>
+              <BodyText>Will you be bringing a guest?</BodyText>
+              <div>
+                <input
+                  checked={plusOneStatus === "yes"}
+                  id="plusOneYes"
+                  name="plusOneStatus"
+                  onChange={onPlusOneChange}
+                  type="radio"
+                  value="yes"
+                />
+                <label className={css.label} htmlFor="plusOneYes">
+                  Yes
+                </label>
+              </div>
+              <div>
+                <input
+                  checked={plusOneStatus === "no"}
+                  id="plusOneNo"
+                  name="plusOneStatus"
+                  onChange={onPlusOneChange}
+                  type="radio"
+                  value="no"
+                />
+                <label className={css.label} htmlFor="plusOneNo">
+                  No
+                </label>
+              </div>
+            </div>
+          </div>
+        )}
+        {plusOneStatus === "yes" && (
+          <PlusOne
+            plusOneFirstName={plusOneFirstName}
+            plusOneLastName={plusOneLastName}
+            plusOnePhone={plusOnePhone}
+            setPlusOneFirstName={setPlusOneFirstName}
+            setPlusOneLastName={setPlusOneLastName}
+            setPlusOnePhone={setPlusOnePhone}
+          />
+        )}
+        <div className={css.buttonWrapper}>
+          <Button
+            disabled={
+              rsvpInput === undefined ||
+              rsvpInput === null ||
+              (plusOneStatus === "yes" &&
+                (!plusOneFirstName || !plusOneLastName || !plusOnePhone)) ||
+              (user.allowedPlusOne &&
+                rsvpInput === true &&
+                (plusOneStatus === undefined || plusOneStatus === null))
+            }
+            onClick={onSubmit}
+          >
+            Reserve
+          </Button>
+        </div>
+      </form>
     </div>
   );
 };
@@ -261,29 +276,31 @@ const Repondez = props => {
 
   return (
     <div className={css.container}>
-      {alreadyRsvpedWarning ? (
+      {/* {alreadyRsvpedWarning ? (
         <AlreadyRsvpedWarning
           toggleAlreadyRsvpedWarning={toggleAlreadyRsvpedWarning}
         />
-      ) : (
-        <>
-          <Heading1>{headingText}</Heading1>
-          <GuestForm
-            onSubmit={onSubmit}
-            plusOneFirstName={plusOneFirstName}
-            plusOneLastName={plusOneLastName}
-            plusOnePhone={plusOnePhone}
-            plusOneStatus={plusOneStatus}
-            rsvpInput={rsvpInput}
-            setPlusOneFirstName={setPlusOneFirstName}
-            setPlusOneInput={setPlusOneInput}
-            setPlusOneLastName={setPlusOneLastName}
-            setPlusOnePhone={setPlusOnePhone}
-            setRsvpInput={setRsvpInput}
-            user={user}
-          />
-        </>
-      )}
+      ) : ( */}
+      <div className={css.formWrapper}>
+        {/* <div className={css.headingWrapper}> */}
+        <Heading1 className={css.heading}>{headingText}</Heading1>
+        {/* </div> */}
+        <GuestForm
+          onSubmit={onSubmit}
+          plusOneFirstName={plusOneFirstName}
+          plusOneLastName={plusOneLastName}
+          plusOnePhone={plusOnePhone}
+          plusOneStatus={plusOneStatus}
+          rsvpInput={rsvpInput}
+          setPlusOneFirstName={setPlusOneFirstName}
+          setPlusOneInput={setPlusOneInput}
+          setPlusOneLastName={setPlusOneLastName}
+          setPlusOnePhone={setPlusOnePhone}
+          setRsvpInput={setRsvpInput}
+          user={user}
+        />
+      </div>
+      {/* )} */}
     </div>
   );
 };
