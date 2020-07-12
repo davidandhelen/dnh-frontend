@@ -29,6 +29,7 @@ module.exports = {
   },
 
   rules: {
+    // "arrow-parens": 2,
     "array-callback-return": 2,
     camelcase: [2, { properties: "never" }],
     curly: 2,

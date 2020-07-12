@@ -1,11 +1,10 @@
 // @flow
 import { gql } from "apollo-boost";
 import { useMutation } from "@apollo/react-hooks";
-import React, { useState } from "react";
-import PhoneInput from "react-phone-number-input/input";
+import React, { useEffect, useState } from "react";
 import CenteredPageLoader from "../../kit/CenteredPageLoader";
 import Button from "../../kit/Button";
-import { Heading1, BodyText } from "../../kit/typography";
+import { BodyText, SubTitle } from "../../kit/typography";
 
 import { AUTH_TOKEN } from "../../index";
 
@@ -19,11 +18,15 @@ const LOGIN_MUTATION = gql`
   }
 `;
 
-// TODO: We don't need this page anymore, but will leave this for now
-// so that I could copy over the logic into RSVP.
 const Login = props => {
+  useEffect(() => {
+    props.showNav(false);
+  }, []);
+
   const [value, setValue] = useState("");
   const [validationError, setError] = useState("");
+  const [isShowingPasswordInput, showPasswordInput] = useState(false);
+
   const [login, { loading }] = useMutation(LOGIN_MUTATION, {
     async onCompleted({ login }) {
       await localStorage.setItem(AUTH_TOKEN, login.token);
@@ -35,47 +38,61 @@ const Login = props => {
 
   const onSubmit = event => {
     event.preventDefault();
-    const phoneNumber = value.replace(/[^\d]/g, "");
-    const phone = phoneNumber.slice(1);
-    setError("");
-    if (phone.length < 7) {
-      setError("Please enter a valid phone number");
-    } else {
+
+    // Check that all items are numbers
+    if (Number.isNaN(Number(value))) {
+      setError("Enter digits only (no symbols).");
+    }
+    // Check that it's 10 digits
+    else if (value.length !== 10) {
+      setError("Enter a 10-digit phone number.");
+    }
+    // If all validations pass, log in
+    else {
       login({
         variables: {
-          phone: phone
+          phone: value
         }
       });
     }
   };
 
-  // TODO: Get a real loading asset
   if (loading) {
-    return <CenteredPageLoader />;
+    return <CenteredPageLoader full={true} theme="light" />;
   }
 
   return (
     <div className={css.container}>
-      <Heading1 className={css.heading}>Celebrate with us</Heading1>
       <form className={css.form} onSubmit={onSubmit}>
         <div className={css.wrapper}>
-          <PhoneInput
-            className={css.phoneInput}
-            // If `country` property is not passed, then "International" format is used.
-            country="US"
-            onChange={setValue}
-            placeholder="(714) 257-9448"
-            value={value}
-          />
-          <BodyText className={css.text}>
-            {!validationError
-              ? "Please enter your phone number"
-              : validationError}
-          </BodyText>
+          <BodyText className={css.label}>Password</BodyText>
+          <SubTitle className={css.text}>
+            Please enter your phone number.
+          </SubTitle>
+          <div className={css.inputWrapper}>
+            <input
+              className={css.input}
+              onChange={e => setValue(e.target.value)}
+              required={true}
+              type={isShowingPasswordInput ? "text" : "password"}
+              value={value}
+            />
+            <Button className={css.button} theme="light" type="submit">
+              →
+            </Button>
+          </div>
+          <div className={css.inputWrapper}>
+            <input
+              className={css.checkbox}
+              onChange={() => showPasswordInput(!isShowingPasswordInput)}
+              type="checkbox"
+            />
+            <SubTitle className={css.text}>Show password</SubTitle>
+          </div>
+          {validationError && (
+            <SubTitle className={css.text}>{validationError}</SubTitle>
+          )}
         </div>
-        <Button theme="light" type="submit">
-          Next →
-        </Button>
       </form>
     </div>
   );
