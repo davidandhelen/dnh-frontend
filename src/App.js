@@ -1,7 +1,7 @@
 // @flow
 import { gql } from "apollo-boost";
 import { useQuery } from "@apollo/react-hooks";
-import React, { Suspense, lazy } from "react";
+import React, { Suspense, lazy, useState } from "react";
 import { Route, Switch } from "react-router-dom";
 
 import MainNav from "./modules/MainNav";
@@ -43,7 +43,7 @@ type RouteType = {
   path: string
 };
 
-const LazyRoute = ({ component, path }: RouteType) => {
+const LazyRoute = ({ component, path, ...rest }: RouteType) => {
   const { loading, data, refetch } = useQuery(ME_QUERY);
   if (loading) {
     return <CenteredPageLoader />;
@@ -57,7 +57,12 @@ const LazyRoute = ({ component, path }: RouteType) => {
         <Route
           path={path}
           render={props => (
-            <Component refetch={refetch} user={data?.me || null} {...props} />
+            <Component
+              refetch={refetch}
+              user={data?.me || null}
+              {...props}
+              {...rest}
+            />
           )}
         />
       </Suspense>
@@ -66,15 +71,17 @@ const LazyRoute = ({ component, path }: RouteType) => {
 };
 
 const App = () => {
+  const [shouldShowNav, showNav] = useState(true);
+
   return (
     <>
-      <MainNav />
+      {shouldShowNav && <MainNav />}
       <Switch>
         <LazyRoute component={Home} exact={true} path="/" />
         <LazyRoute component={Wedding} path="/wedding" />
         <LazyRoute component={Photos} path="/photos" />
         <LazyRoute component={Respond} path="/rsvp" />
-        <LazyRoute component={Login} path="/login" />
+        <LazyRoute component={Login} path="/login" showNav={showNav} />
         <LazyRoute component={FAQ} path="/faq" />
         <LazyRoute component={Respondez} path="/rsvpez" />
         <LazyRoute component={Confirmation} path="/confirmation" />

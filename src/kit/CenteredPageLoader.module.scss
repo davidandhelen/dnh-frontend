@@ -2,10 +2,21 @@
 
 .container {
   align-items: center;
-  background: $color-white;
   display: flex;
   flex-direction: column;
   height: calc(100vh - 60px);
   justify-content: center;
   padding-bottom: 60px;
+}
+
+.container_dark {
+  background: $color-white;
+}
+
+.container_light {
+  background: $color-black;
+}
+
+.container_full {
+  height: 100vh;
 }

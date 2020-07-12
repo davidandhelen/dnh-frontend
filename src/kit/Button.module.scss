@@ -1,12 +1,13 @@
 @import "../style/constants";
 
 .button {
+  align-items: center;
   background-color: $color-transparent;
   cursor: pointer;
+  display: flex;
   font-family: $font-sans-serif;
   font-size: 1rem;
-  min-height: 60px;
-  min-width: 160px;
+  justify-content: center;
   outline: none;
 }
 

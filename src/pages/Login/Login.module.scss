@@ -2,12 +2,12 @@
 
 .container {
   align-items: center;
+  background-color: $color-black;
   display: flex;
   flex-direction: column;
-  height: calc(100vh - 60px);
+  height: 100vh;
   justify-content: center;
   margin: auto;
-  margin-bottom: 86px;
   max-width: 1440px;
 
   @media screen and (max-width: $breakpoint-desktop) {
@@ -15,17 +15,8 @@
   }
 }
 
-.heading {
-  margin: 0 0 24px;
-  text-align: center;
-}
-
 .form {
   align-items: center;
-  background-image: url("./assets/2119.jpg");
-  background-position: center center;
-  background-repeat: no-repeat;
-  background-size: cover;
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -40,51 +31,50 @@
 }
 
 .wrapper {
-  margin-bottom: 36px;
-  max-width: 620px;
-
-  @media screen and (max-width: $breakpoint-desktop) {
-    max-width: 500px;
-  }
+  height: 126px;
+  width: 190px;
 }
 
-.phoneInput {
-  background-color: transparent;
-  border: none;
-  border-bottom: 3px solid rgba(255, 255, 255, 0.35);
+.label {
   color: $color-white;
-  font-family: $font-serif;
-  font-size: 98px;
-  outline: none;
-  transition: color 0.2s linear, border-color 0.2s linear;
-  width: 100%;
-
-  &::placeholder {
-    color: rgba(255, 255, 255, 0.35);
-  }
-
-  &:hover {
-    border-color: rgba(255, 255, 255, 0.6);
-  }
-
-  &:focus {
-    border-color: rgba(255, 255, 255, 0.9);
-    color: $color-white;
-  }
-
-  @media screen and (max-width: $breakpoint-desktop) {
-    font-size: 74px;
-  }
-
-  @media screen and (max-width: $breakpoint-tablet) {
-    font-size: 64px;
-  }
-
-  @media screen and (max-width: $breakpoint-mobile) {
-    font-size: 52px;
-  }
 }
 
 .text {
   color: $color-white;
+}
+
+.inputWrapper {
+  display: flex;
+  width: 100%;
+}
+
+.input {
+  background-color: transparent;
+  border: 1px solid $color-white;
+  color: $color-white;
+  font-family: monospace;
+  font-size: 16px;
+  letter-spacing: 3.6px;
+  margin: 2px 0;
+  padding: 0 6px;
+  width: 156px;
+
+  &:focus {
+    border-style: dotted;
+    outline: none;
+  }
+
+  &::selection {
+    background-color: rgba($color-white, 0.16);
+  }
+}
+
+.checkbox {
+  margin: 4px 4px 4px 0;
+}
+
+.button {
+  height: 32px;
+  margin: 2px 0 2px 2px;
+  width: 32px;
 }
