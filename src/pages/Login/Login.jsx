@@ -5,6 +5,7 @@ import React, { useEffect, useState } from "react";
 import CenteredPageLoader from "../../kit/CenteredPageLoader";
 import Button from "../../kit/Button";
 import { BodyText, SubTitle } from "../../kit/typography";
+import RightArrow from "../../kit/RightArrow";
 
 import { AUTH_TOKEN } from "../../index";
 
@@ -78,7 +79,7 @@ const Login = props => {
               value={value}
             />
             <Button className={css.button} theme="light" type="submit">
-              →
+              <RightArrow />
             </Button>
           </div>
           <div className={css.inputWrapper}>
@@ -90,7 +91,7 @@ const Login = props => {
             <SubTitle className={css.text}>Show password</SubTitle>
           </div>
           {validationError && (
-            <SubTitle className={css.text}>{validationError}</SubTitle>
+            <SubTitle className={css.validation}>{validationError}</SubTitle>
           )}
         </div>
       </form>
