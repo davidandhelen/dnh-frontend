@@ -1,39 +1,74 @@
 @import "../../style/constants";
 
+$section-height: 630px;
+$section-padding: 32px;
+
 .container {
   align-items: center;
   display: flex;
-  flex-direction: column;
-  height: 100%;
+  flex-wrap: wrap;
+  height: calc(100vh - 60px);
+  justify-content: center;
+  margin: 0 auto;
+  max-width: $breakpoint-desktop-large;
 }
 
-.formContainer {
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  margin-top: 64px;
+.info {
+  height: $section-height;
+  padding: $section-padding;
+  text-align: center;
+}
+
+.heading {
+  margin-bottom: 16px;
+}
+
+.wrapper {
+  width: 50%;
 }
 
 .form {
-  align-items: center;
-  display: flex;
-  flex-direction: column;
+  background-color: $color-white;
+  border-radius: 6px;
+  box-shadow: 4px 4px 24px 0 rgba(0, 0, 0, 0.2);
   font-family: "Playfair Display", serif;
-  justify-content: center;
-  margin-bottom: 64px;
+  height: $section-height;
+  margin: 0 auto;
+  padding: $section-padding;
+  width: 540px;
 }
 
-.rsvpRadioGroup {
+.fieldsWrapper {
+  height: 70%;
+}
+
+.fieldset {
+  border: none;
+  margin: 0 0 24px;
+  padding: 0;
+}
+
+.legend {
+  padding: 0;
+}
+
+.radioInputWrapper {
+  align-items: center;
+  display: inline-flex;
+}
+
+.label {
+  line-height: 1.2em;
+}
+
+.inputWrapper {
+  margin-top: 12px;
+}
+
+.buttonWrapper {
+  align-items: flex-end;
   display: flex;
-  flex-direction: row;
-}
-
-.radioTrue,
-.radioFalse {
-  font-size: 32px;
-  min-width: 100px;
-  text-align: left;
+  height: 30%;
 }
 
 .warningContainer {
