@@ -1,7 +1,30 @@
 @import "../style/constants";
 
 .input {
+  background-color: transparent;
+  border: 1px solid $color-black;
+  color: $color-black;
   font-family: $font-sans-serif;
-  min-height: 60px;
-  min-width: 180px;
+  font-size: 20px;
+  font-weight: $font-weight-light;
+  margin: 2px 0;
+  padding: 0 6px;
+  width: 216px;
+
+  &::placeholder {
+    color: rgba($color-black, 0.4);
+  }
+
+  &:hover {
+    border-color: rgba($color-black, 0.8);
+  }
+
+  &:focus {
+    border-style: dotted;
+    outline: none;
+  }
+
+  &::selection {
+    background-color: rgba($color-black, 0.16);
+  }
 }

@@ -4,6 +4,7 @@
     "stylelint-scss",
     "stylelint-prettier",
   ],
+  "ignoreFiles": ["**/*.js*"],
   "rules": {
     "scss/dollar-variable-colon-space-after": "always-single-line",
     "scss/dollar-variable-colon-space-before": "never",

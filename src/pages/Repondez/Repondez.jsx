@@ -3,8 +3,9 @@
 import { gql } from "apollo-boost";
 import { useMutation } from "@apollo/react-hooks";
 import React, { useState } from "react";
-import { Heading1, Heading2 } from "../../kit/typography";
-import PlusOne from "./PlusOne";
+import { BodyText, Heading1, Heading2, SubTitle } from "../../kit/typography";
+import Input from "../../kit/Input";
+import PhoneInput from "../../kit/PhoneInput";
 import Button from "../../kit/Button";
 import CenteredPageLoader from "../../kit/CenteredPageLoader";
 
@@ -69,12 +70,19 @@ const GuestForm = ({
     setPlusOneInput(e.target.value);
   };
 
+  /**
+   * Helpful resource for grouping form controls:
+   * https://www.w3.org/WAI/tutorials/forms/grouping/
+   */
   return (
-    <div className={css.formContainer}>
-      <div className={css.form}>
-        <Heading2>Will you be attending?</Heading2>
-        <div className={css.rsvpRadioGroup}>
-          <span className={css.radioTrue}>
+    <form className={css.form}>
+      <div className={css.fieldsWrapper}>
+        {/* Field 1: Check if guest is attending */}
+        <fieldset className={css.fieldset}>
+          <legend className={css.legend}>
+            <BodyText>Will you be attending?</BodyText>
+          </legend>
+          <div className={css.radioInputWrapper}>
             <input
               checked={rsvpInput === "yes"}
               name="rsvpYes"
@@ -82,9 +90,11 @@ const GuestForm = ({
               type="radio"
               value="yes"
             />
-            Yes
-          </span>
-          <span className={css.radioFalse}>
+            <label>
+              <BodyText>Yes</BodyText>
+            </label>
+          </div>
+          <div className={css.radioInputWrapper}>
             <input
               checked={rsvpInput === "no"}
               name="rsvpNo"
@@ -92,15 +102,18 @@ const GuestForm = ({
               type="radio"
               value="no"
             />
-            No
-          </span>
-        </div>
-      </div>
-      {rsvpInput === "yes" && user.allowedPlusOne ? (
-        <div className={css.form}>
-          <Heading2>Will you be bringing a guest?</Heading2>
-          <div className={css.rsvpRadioGroup}>
-            <span className={css.radioTrue}>
+            <label>
+              <BodyText>No</BodyText>
+            </label>
+          </div>
+        </fieldset>
+        {/* Field 2: Check if guest is bringing a plus one */}
+        {rsvpInput === "yes" && user.allowedPlusOne && (
+          <fieldset className={css.fieldset}>
+            <legend className={css.legend}>
+              <BodyText>Will you be bringing a guest?</BodyText>
+            </legend>
+            <div className={css.radioInputWrapper}>
               <input
                 checked={plusOneStatus === "yes"}
                 name="plusOneYes"
@@ -108,9 +121,11 @@ const GuestForm = ({
                 type="radio"
                 value="yes"
               />
-              Yes
-            </span>
-            <span className={css.radioFalse}>
+              <label>
+                <BodyText>Yes</BodyText>
+              </label>
+            </div>
+            <div className={css.radioInputWrapper}>
               <input
                 checked={plusOneStatus === "no"}
                 name="plusOneNo"
@@ -118,36 +133,77 @@ const GuestForm = ({
                 type="radio"
                 value="no"
               />
-              No
-            </span>
-          </div>
-        </div>
-      ) : null}
-      {plusOneStatus === "yes" ? (
-        <PlusOne
-          plusOneFirstName={plusOneFirstName}
-          plusOneLastName={plusOneLastName}
-          plusOnePhone={plusOnePhone}
-          setPlusOneFirstName={setPlusOneFirstName}
-          setPlusOneLastName={setPlusOneLastName}
-          setPlusOnePhone={setPlusOnePhone}
-        />
-      ) : null}
-      <Button
-        disabled={
-          rsvpInput === undefined ||
-          rsvpInput === null ||
-          (plusOneStatus === "yes" &&
-            (!plusOneFirstName || !plusOneLastName || !plusOnePhone)) ||
-          (user.allowedPlusOne &&
-            rsvpInput === true &&
-            (plusOneStatus === undefined || plusOneStatus === null))
-        }
-        onClick={onSubmit}
-      >
-        Reserve
-      </Button>
-    </div>
+              <label>
+                <BodyText>No</BodyText>
+              </label>
+            </div>
+          </fieldset>
+        )}
+        {/* Field 3: If guest bringing plus one, gather their information */}
+        {plusOneStatus === "yes" && (
+          <fieldset className={css.fieldset}>
+            <legend className={css.legend}>
+              <BodyText>Guest Information</BodyText>
+            </legend>
+            <div className={css.inputWrapper}>
+              <label htmlFor="guestFirstName">
+                <SubTitle className={css.label}>First Name</SubTitle>
+              </label>
+              <Input
+                id="guestFirstName"
+                name="guestFirstName"
+                onChange={e => setPlusOneFirstName(e.target.value)}
+                placeholder="David"
+                required={true}
+                value={plusOneFirstName}
+              />
+            </div>
+            <div className={css.inputWrapper}>
+              <label htmlFor="guestLastName">
+                <SubTitle className={css.label}>Last Name</SubTitle>
+              </label>
+              <Input
+                id="guestLastName"
+                name="guestLastName"
+                onChange={e => setPlusOneLastName(e.target.value)}
+                placeholder="Shin"
+                required={true}
+                value={plusOneLastName}
+              />
+            </div>
+            <div className={css.inputWrapper}>
+              <label htmlFor="guestPhoneNumber">
+                <SubTitle className={css.label}>Phone Number</SubTitle>
+              </label>
+              <PhoneInput
+                country="US"
+                id="guestPhoneNumber"
+                name="guestPhoneNumber"
+                onChange={setPlusOnePhone}
+                placeholder="Phone Number"
+                value={plusOnePhone}
+              />
+            </div>
+          </fieldset>
+        )}
+      </div>
+      <div className={css.buttonWrapper}>
+        <Button
+          disabled={
+            rsvpInput === undefined ||
+            rsvpInput === null ||
+            (plusOneStatus === "yes" &&
+              (!plusOneFirstName || !plusOneLastName || !plusOnePhone)) ||
+            (user.allowedPlusOne &&
+              rsvpInput === true &&
+              (plusOneStatus === undefined || plusOneStatus === null))
+          }
+          onClick={onSubmit}
+        >
+          Reserve a seat
+        </Button>
+      </div>
+    </form>
   );
 };
 
@@ -247,7 +303,10 @@ const Repondez = props => {
       console.log(rsvpStatus, plusOneInfo);
     } else {
       updateGuestRsvp({
-        variables: { id: user.id, rsvpStatus: rsvpStatus }
+        variables: {
+          id: user.id,
+          rsvpStatus: rsvpStatus
+        }
       });
     }
   };
@@ -259,6 +318,40 @@ const Repondez = props => {
     headingText = `${user.firstName}, reserve a spot at the table for you and a guest.`;
   }
 
+  const rsvpForm = (
+    <>
+      <div className={css.wrapper}>
+        <div className={css.info}>
+          <Heading1 className={css.heading}>
+            RSVP for the Ceremony & Reception
+          </Heading1>
+          <BodyText>{headingText}</BodyText>
+          {/* <BodyText>RSVP verb</BodyText>
+          <SubTitle>\ ˌär-ˌes-ˌvē-ˈpē \</SubTitle>
+          <SubTitle>: to respond to an invitation</SubTitle>
+          <BodyText>RSVP abbreviation</BodyText>
+          <SubTitle>French répondez s'il vous plaît</SubTitle> */}
+        </div>
+      </div>
+      <div className={css.wrapper}>
+        <GuestForm
+          onSubmit={onSubmit}
+          plusOneFirstName={plusOneFirstName}
+          plusOneLastName={plusOneLastName}
+          plusOnePhone={plusOnePhone}
+          plusOneStatus={plusOneStatus}
+          rsvpInput={rsvpInput}
+          setPlusOneFirstName={setPlusOneFirstName}
+          setPlusOneInput={setPlusOneInput}
+          setPlusOneLastName={setPlusOneLastName}
+          setPlusOnePhone={setPlusOnePhone}
+          setRsvpInput={setRsvpInput}
+          user={user}
+        />
+      </div>
+    </>
+  );
+
   return (
     <div className={css.container}>
       {alreadyRsvpedWarning ? (
@@ -266,23 +359,7 @@ const Repondez = props => {
           toggleAlreadyRsvpedWarning={toggleAlreadyRsvpedWarning}
         />
       ) : (
-        <>
-          <Heading1>{headingText}</Heading1>
-          <GuestForm
-            onSubmit={onSubmit}
-            plusOneFirstName={plusOneFirstName}
-            plusOneLastName={plusOneLastName}
-            plusOnePhone={plusOnePhone}
-            plusOneStatus={plusOneStatus}
-            rsvpInput={rsvpInput}
-            setPlusOneFirstName={setPlusOneFirstName}
-            setPlusOneInput={setPlusOneInput}
-            setPlusOneLastName={setPlusOneLastName}
-            setPlusOnePhone={setPlusOnePhone}
-            setRsvpInput={setRsvpInput}
-            user={user}
-          />
-        </>
+        rsvpForm
       )}
     </div>
   );

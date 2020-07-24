@@ -1,7 +1,7 @@
 // @flow
 import { gql } from "apollo-boost";
 import { useMutation } from "@apollo/react-hooks";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import CenteredPageLoader from "../../kit/CenteredPageLoader";
 import Button from "../../kit/Button";
 import { BodyText, SubTitle } from "../../kit/typography";
@@ -20,10 +20,6 @@ const LOGIN_MUTATION = gql`
 `;
 
 const Login = props => {
-  useEffect(() => {
-    props.showNav(false);
-  }, []);
-
   const [value, setValue] = useState("");
   const [validationError, setError] = useState("");
   const [isShowingPasswordInput, showPasswordInput] = useState(false);

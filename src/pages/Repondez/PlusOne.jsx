@@ -1,7 +1,7 @@
 // @flow
 import React from "react";
 
-import { Heading2 } from "../../kit/typography";
+import { BodyText } from "../../kit/typography";
 import Input from "../../kit/Input";
 import PhoneInput from "../../kit/PhoneInput";
 import css from "./PlusOne.module.scss";
@@ -15,30 +15,50 @@ const PlusOne = ({
   plusOnePhone
 }) => {
   return (
-    <div className={css.plusOneForm}>
-      <Heading2>Your Guest&apos;s Info</Heading2>
-      <Input
-        name={"Guest's First Name"}
-        onChange={e => setPlusOneFirstName(e.target.value)}
-        placeholder="First Name"
-        required={true}
-        value={plusOneFirstName}
-      />
-      <Input
-        name={"Guest's Last Name"}
-        onChange={e => setPlusOneLastName(e.target.value)}
-        placeholder="Last Name"
-        required={true}
-        value={plusOneLastName}
-      />
-      <PhoneInput
-        country="US"
-        name={"Guest's Phone Number"}
-        onChange={setPlusOnePhone}
-        placeholder="Phone Number"
-        value={plusOnePhone}
-      />
-    </div>
+    <fieldset className={css.fieldset}>
+      <legend>
+        <BodyText>Your Guest&apos;s Info</BodyText>
+      </legend>
+      <div>
+        <label htmlFor="guestFirstName">
+          <BodyText>Full name</BodyText>
+        </label>
+        <Input
+          id="guestFirstName"
+          name="guestFirstName"
+          onChange={e => setPlusOneFirstName(e.target.value)}
+          placeholder="Helen"
+          required={true}
+          value={plusOneFirstName}
+        />
+      </div>
+      <div>
+        <label htmlFor="guestLastName">
+          <BodyText>Full name</BodyText>
+        </label>
+        <Input
+          id="guestLastName"
+          name="guestLastName"
+          onChange={e => setPlusOneLastName(e.target.value)}
+          placeholder="Cho"
+          required={true}
+          value={plusOneLastName}
+        />
+      </div>
+      <div>
+        <label htmlFor="guestPhoneNumber">
+          <BodyText>Phone number</BodyText>
+        </label>
+        <PhoneInput
+          country="US"
+          id="guestPhoneNumber"
+          name="guestPhoneNumber"
+          onChange={setPlusOnePhone}
+          placeholder="Phone Number"
+          value={plusOnePhone}
+        />
+      </div>
+    </fieldset>
   );
 };
 

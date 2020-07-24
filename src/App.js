@@ -1,7 +1,7 @@
 // @flow
 import { gql } from "apollo-boost";
 import { useQuery } from "@apollo/react-hooks";
-import React, { Suspense, lazy, useState } from "react";
+import React, { Suspense, lazy } from "react";
 import { Route, Switch } from "react-router-dom";
 
 import MainNav from "./modules/MainNav";
@@ -70,24 +70,20 @@ const LazyRoute = ({ component, path, ...rest }: RouteType) => {
   );
 };
 
-const App = () => {
-  const [shouldShowNav, showNav] = useState(true);
-
-  return (
-    <>
-      {shouldShowNav && <MainNav />}
-      <Switch>
-        <LazyRoute component={Home} exact={true} path="/" />
-        <LazyRoute component={Wedding} path="/wedding" />
-        <LazyRoute component={Photos} path="/photos" />
-        <LazyRoute component={Respond} path="/rsvp" />
-        <LazyRoute component={Login} path="/login" showNav={showNav} />
-        <LazyRoute component={FAQ} path="/faq" />
-        <LazyRoute component={Respondez} path="/rsvpez" />
-        <LazyRoute component={Confirmation} path="/confirmation" />
-      </Switch>
-    </>
-  );
-};
+const App = () => (
+  <>
+    <MainNav />
+    <Switch>
+      <LazyRoute component={Home} exact={true} path="/" />
+      <LazyRoute component={Wedding} path="/wedding" />
+      <LazyRoute component={Photos} path="/photos" />
+      <LazyRoute component={Respond} path="/rsvp" />
+      <LazyRoute component={Login} path="/login" />
+      <LazyRoute component={FAQ} path="/faq" />
+      <LazyRoute component={Respondez} path="/rsvpez" />
+      <LazyRoute component={Confirmation} path="/confirmation" />
+    </Switch>
+  </>
+);
 
 export default App;
