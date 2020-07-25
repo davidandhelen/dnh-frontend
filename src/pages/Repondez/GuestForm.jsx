@@ -44,24 +44,26 @@ const GuestForm = ({
           <div className={css.radioInputWrapper}>
             <input
               checked={rsvpInput === "yes"}
+              id="rsvpYes"
               name="rsvpYes"
               onChange={onRsvpChange}
               type="radio"
               value="yes"
             />
-            <label>
+            <label htmlFor="rsvpYes">
               <BodyText>Yes</BodyText>
             </label>
           </div>
           <div className={css.radioInputWrapper}>
             <input
               checked={rsvpInput === "no"}
+              id="rsvpNo"
               name="rsvpNo"
               onChange={onRsvpChange}
               type="radio"
               value="no"
             />
-            <label>
+            <label htmlFor="rsvpNo">
               <BodyText>No</BodyText>
             </label>
           </div>
@@ -75,24 +77,26 @@ const GuestForm = ({
             <div className={css.radioInputWrapper}>
               <input
                 checked={plusOneStatus === "yes"}
+                id="plusOneYes"
                 name="plusOneYes"
                 onChange={onPlusOneChange}
                 type="radio"
                 value="yes"
               />
-              <label>
+              <label htmlFor="plusOneYes">
                 <BodyText>Yes</BodyText>
               </label>
             </div>
             <div className={css.radioInputWrapper}>
               <input
                 checked={plusOneStatus === "no"}
+                id="plusOneNo"
                 name="plusOneNo"
                 onChange={onPlusOneChange}
                 type="radio"
                 value="no"
               />
-              <label>
+              <label htmlFor="plusOneNo">
                 <BodyText>No</BodyText>
               </label>
             </div>
