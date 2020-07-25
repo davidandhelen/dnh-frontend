@@ -1,0 +1,48 @@
+@import "../../style/constants";
+
+$section-height: 630px;
+$section-padding: 32px;
+
+.form {
+  background-color: $color-white;
+  border-radius: 6px;
+  box-shadow: 4px 4px 24px 0 rgba(0, 0, 0, 0.2);
+  font-family: "Playfair Display", serif;
+  height: $section-height;
+  margin: 0 auto;
+  padding: $section-padding;
+  width: 540px;
+}
+
+.fieldsWrapper {
+  height: 70%;
+}
+
+.fieldset {
+  border: none;
+  margin: 0 0 24px;
+  padding: 0;
+}
+
+.legend {
+  padding: 0;
+}
+
+.radioInputWrapper {
+  align-items: center;
+  display: inline-flex;
+}
+
+.label {
+  line-height: 1.2em;
+}
+
+.inputWrapper {
+  margin-top: 12px;
+}
+
+.buttonWrapper {
+  align-items: flex-end;
+  display: flex;
+  height: 30%;
+}
