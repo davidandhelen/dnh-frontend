@@ -10,6 +10,7 @@ import Button from "../../kit/Button";
 import CenteredPageLoader from "../../kit/CenteredPageLoader";
 
 import GuestForm from "./GuestForm";
+import RSVPStatus from "./RSVPStatus";
 
 import css from "./Repondez.module.scss";
 import NoPermission from "../NoPermission/NoPermission";
@@ -34,22 +35,6 @@ const UPDATE_RSVP_STATUS_MUTATION = gql`
   }
 `;
 
-const AlreadyRsvpedWarning = ({ toggleAlreadyRsvpedWarning }) => (
-  <div className={css.warningContainer}>
-    <div className={css.warning}>
-      <Heading1>You already RSVPed, would you like to change it?</Heading1>
-      <Button
-        onClick={() => {
-          toggleAlreadyRsvpedWarning(false);
-        }}
-        type="submit"
-      >
-        →
-      </Button>
-    </div>
-  </div>
-);
-
 const Repondez = props => {
   const [updateGuestRsvp, { error, loading }] = useMutation(
     UPDATE_RSVP_STATUS_MUTATION,
@@ -64,12 +49,12 @@ const Repondez = props => {
 
   const { user } = props || undefined;
 
-  const [alreadyRsvpedWarning, toggleAlreadyRsvpedWarning] = useState(
+  const [hasResponded, toggleResponseStatus] = useState(
     user && (user.rsvpStatus === true || user.rsvpStatus === false)
   );
-  // Loading guest's rsvp status to check if they've already rsvped
-  let preLoadedRsvpStatus;
 
+  // Load guest's RSVP status.
+  let preLoadedRsvpStatus;
   if (user && user.rsvpStatus !== undefined && user.rsvpStatus !== null) {
     if (user.rsvpStatus === true) {
       preLoadedRsvpStatus = "yes";
@@ -78,6 +63,7 @@ const Repondez = props => {
     }
   }
 
+  // Load guest's plus one RSVP status.
   let preLoadedPlusOneStatus;
   if (user && user.rsvpStatus === true && user.allowedPlusOne && user.plusOne) {
     preLoadedPlusOneStatus = "yes";
@@ -92,6 +78,7 @@ const Repondez = props => {
     preLoadedPlusOneStatus = undefined;
   }
 
+  // Load plus one's information.
   const preLoadedPlusOneInput = {
     firstName: "",
     lastName: "",
@@ -103,6 +90,7 @@ const Repondez = props => {
     preLoadedPlusOneInput.phone = `+1${user.plusOne.phone}`;
   }
 
+  // Set loaded RSVP status and information.
   const [rsvpInput, setRsvpInput] = useState(preLoadedRsvpStatus);
   const [plusOneStatus, setPlusOneInput] = useState(preLoadedPlusOneStatus);
   const [plusOneFirstName, setPlusOneFirstName] = useState(
@@ -124,9 +112,13 @@ const Repondez = props => {
   const {
     user: { allowedPlusOne }
   } = props;
+
   const onSubmit = () => {
     console.log("Submitting form");
+
     const rsvpStatus = rsvpInput === "yes" || false;
+
+    // RSVP yes for guest and plus one.
     if (rsvpStatus === true && plusOneStatus === "yes") {
       const plusOneInfo = {
         firstName: plusOneFirstName,
@@ -144,7 +136,10 @@ const Repondez = props => {
         }
       });
       console.log(rsvpStatus, plusOneInfo);
-    } else {
+    }
+
+    // RSVP for guest only (no plus one).
+    else {
       updateGuestRsvp({
         variables: {
           id: user.id,
@@ -161,49 +156,45 @@ const Repondez = props => {
     headingText = `${user.firstName}, reserve a spot at the table for you and a guest.`;
   }
 
-  const rsvpForm = (
-    <>
-      <div className={css.wrapper}>
-        <div className={css.info}>
-          <Heading1 className={css.heading}>
-            RSVP for the Ceremony & Reception
-          </Heading1>
-          <BodyText>{headingText}</BodyText>
-          {/* <BodyText>RSVP verb</BodyText>
-          <SubTitle>\ ˌär-ˌes-ˌvē-ˈpē \</SubTitle>
-          <SubTitle>: to respond to an invitation</SubTitle>
-          <BodyText>RSVP abbreviation</BodyText>
-          <SubTitle>French répondez s'il vous plaît</SubTitle> */}
+  if (!hasResponded) {
+    return (
+      <div className={css.container}>
+        <div className={css.wrapper}>
+          <div className={css.info}>
+            <Heading1 className={css.heading}>
+              RSVP for the Ceremony & Reception
+            </Heading1>
+            <BodyText>{headingText}</BodyText>
+            {/* <BodyText>RSVP verb</BodyText>
+                <SubTitle>\ ˌär-ˌes-ˌvē-ˈpē \</SubTitle>
+                <SubTitle>: to respond to an invitation</SubTitle>
+                <BodyText>RSVP abbreviation</BodyText>
+                <SubTitle>French répondez s'il vous plaît</SubTitle> */}
+          </div>
+        </div>
+        <div className={css.wrapper}>
+          <GuestForm
+            onSubmit={onSubmit}
+            plusOneFirstName={plusOneFirstName}
+            plusOneLastName={plusOneLastName}
+            plusOnePhone={plusOnePhone}
+            plusOneStatus={plusOneStatus}
+            rsvpInput={rsvpInput}
+            setPlusOneFirstName={setPlusOneFirstName}
+            setPlusOneInput={setPlusOneInput}
+            setPlusOneLastName={setPlusOneLastName}
+            setPlusOnePhone={setPlusOnePhone}
+            setRsvpInput={setRsvpInput}
+            user={user}
+          />
         </div>
       </div>
-      <div className={css.wrapper}>
-        <GuestForm
-          onSubmit={onSubmit}
-          plusOneFirstName={plusOneFirstName}
-          plusOneLastName={plusOneLastName}
-          plusOnePhone={plusOnePhone}
-          plusOneStatus={plusOneStatus}
-          rsvpInput={rsvpInput}
-          setPlusOneFirstName={setPlusOneFirstName}
-          setPlusOneInput={setPlusOneInput}
-          setPlusOneLastName={setPlusOneLastName}
-          setPlusOnePhone={setPlusOnePhone}
-          setRsvpInput={setRsvpInput}
-          user={user}
-        />
-      </div>
-    </>
-  );
+    );
+  }
 
   return (
     <div className={css.container}>
-      {alreadyRsvpedWarning ? (
-        <AlreadyRsvpedWarning
-          toggleAlreadyRsvpedWarning={toggleAlreadyRsvpedWarning}
-        />
-      ) : (
-        rsvpForm
-      )}
+      <RSVPStatus toggleResponseStatus={toggleResponseStatus} />;
     </div>
   );
 };
