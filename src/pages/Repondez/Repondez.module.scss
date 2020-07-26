@@ -26,3 +26,14 @@ $section-padding: 32px;
 .wrapper {
   width: 50%;
 }
+
+.something {
+  background-color: $color-white;
+  border-radius: 6px;
+  box-shadow: 4px 4px 24px 0 rgba(0, 0, 0, 0.2);
+  font-family: "Playfair Display", serif;
+  height: $section-height;
+  margin: 0 auto;
+  padding: $section-padding;
+  width: 540px;
+}
