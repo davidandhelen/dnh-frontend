@@ -26,24 +26,3 @@ $section-padding: 32px;
 .wrapper {
   width: 50%;
 }
-
-.warningContainer {
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  margin-top: 64px;
-}
-
-.warning {
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  text-align: center;
-  width: 75%;
-}
-
-.warning > button {
-  margin-top: 32px;
-}
