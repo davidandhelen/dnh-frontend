@@ -156,6 +156,56 @@ const Repondez = props => {
     headingText = `${user.firstName}, reserve a spot at the table for you and a guest.`;
   }
 
+  console.log(user);
+
+  if (hasResponded) {
+    return (
+      <div className={css.container}>
+        <div className={css.wrapper}>
+          <div className={css.info}>
+            <Heading1 className={css.heading}>
+              Here is your RSVP information
+            </Heading1>
+            <BodyText>
+              You already RSVPed, would you like to change it?
+            </BodyText>
+            <Button
+              onClick={() => {
+                toggleResponseStatus(false);
+              }}
+              type="submit"
+            >
+              →
+            </Button>
+          </div>
+        </div>
+        <div className={css.wrapper}>
+          <div className={css.something}>
+            <Heading1>
+              {user.firstName} {user.lastName}
+            </Heading1>
+            <Heading2>
+              {user.rsvpStatus ? "Yes" : "No"}, I will
+              {user.rsvpStatus ? null : "not"} be attending the ceremony and
+              reception.
+            </Heading2>
+            <Heading2>
+              I am {user.plusOne ? null : "not"} bringing a guest.{" "}
+              {user.plusOne
+                ? `The guest's
+              name is ${user.plusOne.firstName} ${user.plusOne.lastName}, and
+              their phone number is ${user.plusOne.phone}.`
+                : null}
+              {/* The guest's
+              name is {user.plusOne.firstName} {user.plusOne.lastName}, and
+              their phone number is {user.plusOne.phone}. */}
+            </Heading2>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   if (!hasResponded) {
     return (
       <div className={css.container}>
@@ -194,7 +244,7 @@ const Repondez = props => {
 
   return (
     <div className={css.container}>
-      <RSVPStatus toggleResponseStatus={toggleResponseStatus} />;
+      <RSVPStatus toggleResponseStatus={toggleResponseStatus} />
     </div>
   );
 };
