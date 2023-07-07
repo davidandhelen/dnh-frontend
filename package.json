@@ -24,7 +24,7 @@
     "react-router-dom": "^5.0.1",
     "react-scripts": "^3.3.0",
     "redux": "^4.0.4",
-    "stylelint": "^10.1.0",
+    "stylelint": "^15.10.1",
     "stylelint-order": "^3.0.0",
     "stylelint-prettier": "^1.1.1",
     "stylelint-scss": "^3.9.1"
